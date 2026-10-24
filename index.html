@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THALMAN — Official Store</title>
+    <!-- Google Fonts for Clean Luxury Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0b0b0b;
+            color: #f3f3f3;
+            font-family: 'Space Grotesk', sans-serif;
+            letter-spacing: -0.02em;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        header {
+            padding: 60px 20px 40px;
+            text-align: center;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .logo-container img {
+            max-width: 280px;
+            width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto 12px;
+            filter: invert(1); /* Adjusts black logo text to white for dark theme */
+        }
+
+        .tagline {
+            font-size: 0.85rem;
+            color: #888;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .section-title {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: #666;
+            margin-bottom: 30px;
+            border-left: 2px solid #fff;
+            padding-left: 12px;
+        }
+
+        .sizes-box {
+            background: #121212;
+            border: 1px solid #222;
+            padding: 20px 24px;
+            margin-bottom: 60px;
+            font-size: 0.95rem;
+            color: #ccc;
+        }
+
+        .sizes-box span {
+            color: #fff;
+            font-weight: 600;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 50px 30px;
+        }
+
+        .product-card {
+            background: #111;
+            border: 1px solid #1f1f1f;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .product-card:hover {
+            border-color: #444;
+            transform: translateY(-4px);
+        }
+
+        .product-image-wrapper {
+            width: 100%;
+            background: #161616;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .product-image-wrapper img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            transition: opacity 0.3s ease;
+        }
+
+        .product-info {
+            padding: 24px;
+            border-top: 1px solid #1f1f1f;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .product-name {
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            color: #fff;
+        }
+
+        .product-action {
+            background: none;
+            border: 1px solid #444;
+            color: #fff;
+            padding: 8px 16px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .product-action:hover {
+            background: #fff;
+            color: #000;
+            border-color: #fff;
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            font-size: 0.8rem;
+            color: #555;
+            border-top: 1px solid #1a1a1a;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 15px;
+            }
+            header {
+                padding: 40px 15px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-container">
+            <!-- Replace images/logo.png with your uploaded logo file name -->
+            <img src="images/logo.png" alt="THALMAN">
+        </div>
+        <div class="tagline">(made in München)</div>
+    </header>
+
+    <main class="container">
+        
+        <div class="sizes-box">
+            <span>SIZES:</span> All products are available in size XS, S, M, L.
+        </div>
+
+        <div class="section-title">Products</div>
+
+        <div class="products-grid">
+            
+            <!-- Product 001: Charcoal Black Denim -->
+            <div class="product-card">
+                <div class="product-image-wrapper">
+                    <!-- Make sure image file matches exactly -->
+                    <img src="images/denim-charcoal.png" alt="Product 001 | Charcoal Black">
+                </div>
+                <div class="product-info">
+                    <span class="product-name">Product 001 | Charcoal Black</span>
+                    <button class="product-action" onclick="alert('Item added to inquiry / bag.')">View</button>
+                </div>
+            </div>
+
+            <!-- Product 001: Medium Wash Blue Denim -->
+            <div class="product-card">
+                <div class="product-image-wrapper">
+                    <img src="images/denim-blue.png" alt="Product 001 | Medium Wash Blue">
+                </div>
+                <div class="product-info">
+                    <span class="product-name">Product 001 | Medium Wash Blue</span>
+                    <button class="product-action" onclick="alert('Item added to inquiry / bag.')">View</button>
+                </div>
+            </div>
+
+            <!-- Product 002: Black Hoodie -->
+            <div class="product-card">
+                <div class="product-image-wrapper">
+                    <img src="images/hoodie-black.png" alt="Product 002 | Black">
+                </div>
+                <div class="product-info">
+                    <span class="product-name">Product 002 | Black</span>
+                    <button class="product-action" onclick="alert('Item added to inquiry / bag.')">View</button>
+                </div>
+            </div>
+
+            <!-- Product 002: White Hoodie -->
+            <div class="product-card">
+                <div class="product-image-wrapper">
+                    <img src="images/hoodie-white.png" alt="Product 002 | White">
+                </div>
+                <div class="product-info">
+                    <span class="product-name">Product 002 | White</span>
+                    <button class="product-action" onclick="alert('Item added to inquiry / bag.')">View</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        &copy; 2026 THALMAN. All Rights Reserved.
+    </footer>
+
+</body>
+</html>
