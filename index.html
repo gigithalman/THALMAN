@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>THALMAN — Official Store</title>
-    <!-- Google Fonts for Clean Luxury Typography -->
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -14,7 +13,7 @@
         }
 
         body {
-            background-color: #0b0b0b;
+            background-color: #080808;
             color: #f3f3f3;
             font-family: 'Space Grotesk', sans-serif;
             letter-spacing: -0.02em;
@@ -23,220 +22,424 @@
         }
 
         header {
-            padding: 60px 20px 40px;
+            padding: 50px 20px 30px;
             text-align: center;
-            border-bottom: 1px solid #1a1a1a;
+            border-bottom: 1px solid #161616;
+            position: relative;
         }
 
         .logo-container img {
-            max-width: 280px;
+            max-width: 240px;
             width: 100%;
             height: auto;
             display: block;
-            margin: 0 auto 12px;
-            filter: invert(1); /* Adjusts black logo text to white for dark theme */
+            margin: 0 auto 10px;
+            filter: invert(1);
         }
 
         .tagline {
-            font-size: 0.85rem;
-            color: #888;
-            letter-spacing: 0.15em;
+            font-size: 0.8rem;
+            color: #777;
+            letter-spacing: 0.2em;
             text-transform: uppercase;
-            font-weight: 400;
+        }
+
+        .bag-btn {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: #151515;
+            border: 1px solid #333;
+            color: #fff;
+            padding: 8px 16px;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .bag-btn:hover {
+            border-color: #fff;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
-            padding: 60px 20px;
+            padding: 50px 20px;
         }
 
         .section-title {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 0.2em;
-            color: #666;
-            margin-bottom: 30px;
+            letter-spacing: 0.25em;
+            color: #555;
+            margin-bottom: 40px;
             border-left: 2px solid #fff;
-            padding-left: 12px;
-        }
-
-        .sizes-box {
-            background: #121212;
-            border: 1px solid #222;
-            padding: 20px 24px;
-            margin-bottom: 60px;
-            font-size: 0.95rem;
-            color: #ccc;
-        }
-
-        .sizes-box span {
-            color: #fff;
-            font-weight: 600;
+            padding-left: 10px;
         }
 
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 50px 30px;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 60px 40px;
+        }
+
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         .product-card {
             background: #111;
-            border: 1px solid #1f1f1f;
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            border: 1px solid #1a1a1a;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            transition: border-color 0.3s ease;
         }
 
         .product-card:hover {
-            border-color: #444;
-            transform: translateY(-4px);
+            border-color: #333;
         }
 
-        .product-image-wrapper {
+        .product-image-container {
             width: 100%;
-            background: #161616;
-            overflow: hidden;
+            background: #141414;
+            padding: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            cursor: zoom-in;
+            position: relative;
+            min-height: 400px;
         }
 
-        .product-image-wrapper img {
+        .product-image-container img {
             width: 100%;
             height: auto;
+            max-height: 450px;
             object-fit: contain;
-            transition: opacity 0.3s ease;
+            transition: transform 0.3s ease;
         }
 
-        .product-info {
-            padding: 24px;
-            border-top: 1px solid #1f1f1f;
+        .product-image-container:hover img {
+            transform: scale(1.03);
+        }
+
+        .product-details {
+            padding: 30px;
+            border-top: 1px solid #1a1a1a;
+            background: #0d0d0d;
+        }
+
+        .product-header-row {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
+            margin-bottom: 20px;
         }
 
-        .product-name {
-            font-size: 0.95rem;
+        .product-title {
+            font-size: 1rem;
             font-weight: 500;
             letter-spacing: 0.05em;
             color: #fff;
         }
 
-        .product-action {
-            background: none;
-            border: 1px solid #444;
-            color: #fff;
-            padding: 8px 16px;
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 0.8rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: background 0.2s, border-color 0.2s;
+        .product-price {
+            font-size: 0.95rem;
+            color: #aaa;
         }
 
-        .product-action:hover {
+        /* Color Switcher */
+        .color-selector {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .color-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #777;
+        }
+
+        .color-options {
+            display: flex;
+            gap: 8px;
+        }
+
+        .color-btn {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #aaa;
+            padding: 6px 12px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            letter-spacing: 0.05em;
+            font-family: 'Space Grotesk', sans-serif;
+            transition: all 0.2s;
+        }
+
+        .color-btn.active {
             background: #fff;
             color: #000;
             border-color: #fff;
+            font-weight: 600;
+        }
+
+        /* Size Selector */
+        .size-selector {
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .size-options {
+            display: flex;
+            gap: 6px;
+        }
+
+        .size-btn {
+            background: #161616;
+            border: 1px solid #2a2a2a;
+            color: #ccc;
+            width: 34px;
+            height: 34px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            font-family: 'Space Grotesk', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .size-btn.active {
+            border-color: #fff;
+            color: #fff;
+            background: #222;
+        }
+
+        .add-to-bag-btn {
+            width: 100%;
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 14px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .add-to-bag-btn:hover {
+            opacity: 0.85;
+        }
+
+        /* Lightbox Modal */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 25px;
+            right: 30px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 2rem;
+            cursor: pointer;
+            font-weight: 300;
         }
 
         footer {
             text-align: center;
-            padding: 60px 20px;
-            font-size: 0.8rem;
+            padding: 50px 20px;
+            font-size: 0.75rem;
             color: #555;
-            border-top: 1px solid #1a1a1a;
-            letter-spacing: 0.1em;
+            border-top: 1px solid #161616;
+            letter-spacing: 0.15em;
             text-transform: uppercase;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 30px 15px;
-            }
-            header {
-                padding: 40px 15px 25px;
-            }
         }
     </style>
 </head>
 <body>
 
     <header>
+        <button class="bag-btn" onclick="alert('Inquiry Bag is empty.')">Bag (0)</button>
         <div class="logo-container">
-            <!-- Replace images/logo.png with your uploaded logo file name -->
             <img src="images/logo.png" alt="THALMAN">
         </div>
         <div class="tagline">(made in München)</div>
     </header>
 
     <main class="container">
-        
-        <div class="sizes-box">
-            <span>SIZES:</span> All products are available in size XS, S, M, L.
-        </div>
-
-        <div class="section-title">Products</div>
+        <div class="section-title">Current Release</div>
 
         <div class="products-grid">
-            
-            <!-- Product 001: Charcoal Black Denim -->
-            <div class="product-card">
-                <div class="product-image-wrapper">
-                    <!-- Make sure image file matches exactly -->
-                    <img src="images/denim-charcoal.png" alt="Product 001 | Charcoal Black">
+
+            <!-- PRODUCT 001: DENIM -->
+            <div class="product-card" id="product-1">
+                <div class="product-image-container" onclick="openLightbox(this.querySelector('img').src)">
+                    <img id="img-1" src="images/denim-charcoal.png" alt="Product 001 Structured Denim">
                 </div>
-                <div class="product-info">
-                    <span class="product-name">Product 001 | Charcoal Black</span>
-                    <button class="product-action" onclick="alert('Item added to inquiry / bag.')">View</button>
+                <div class="product-details">
+                    <div class="product-header-row">
+                        <div>
+                            <div class="product-title" id="title-1">Product 001 | Structured Denim</div>
+                            <div class="product-tagline" style="font-size: 0.75rem; color: #777; margin-top: 4px;">Heavyweight Panel Construction</div>
+                        </div>
+                        <div class="product-price">€290</div>
+                    </div>
+
+                    <!-- Color Switcher -->
+                    <div class="color-selector">
+                        <span class="color-label">Color:</span>
+                        <div class="color-options">
+                            <button class="color-btn active" onclick="switchProductVariant('1', 'charcoal', 'images/denim-charcoal.png', 'Product 001 | Structured Denim (Charcoal Black)', this)">Charcoal Black</button>
+                            <button class="color-btn" onclick="switchProductVariant('1', 'blue', 'images/denim-blue.png', 'Product 001 | Structured Denim (Medium Wash Blue)', this)">Medium Wash Blue</button>
+                        </div>
+                    </div>
+
+                    <!-- Size Selector -->
+                    <div class="size-selector">
+                        <span class="color-label">Size:</span>
+                        <div class="size-options" id="sizes-1">
+                            <button class="size-btn" onclick="selectSize('1', 'XS', this)">XS</button>
+                            <button class="size-btn active" onclick="selectSize('1', 'S', this)">S</button>
+                            <button class="size-btn" onclick="selectSize('1', 'M', this)">M</button>
+                            <button class="size-btn" onclick="selectSize('1', 'L', this)">L</button>
+                        </div>
+                    </div>
+
+                    <button class="add-to-bag-btn" onclick="addToBag('Product 001', '1')">Add to Bag</button>
                 </div>
             </div>
 
-            <!-- Product 001: Medium Wash Blue Denim -->
-            <div class="product-card">
-                <div class="product-image-wrapper">
-                    <img src="images/denim-blue.png" alt="Product 001 | Medium Wash Blue">
+            <!-- PRODUCT 002: HOODIE -->
+            <div class="product-card" id="product-2">
+                <div class="product-image-container" onclick="openLightbox(this.querySelector('img').src)">
+                    <img id="img-2" src="images/hoodie-black.png" alt="Product 002 Heavyweight Hoodie">
                 </div>
-                <div class="product-info">
-                    <span class="product-name">Product 001 | Medium Wash Blue</span>
-                    <button class="product-action" onclick="alert('Item added to inquiry / bag.')">View</button>
-                </div>
-            </div>
+                <div class="product-details">
+                    <div class="product-header-row">
+                        <div>
+                            <div class="product-title" id="title-2">Product 002 | Heavyweight Hoodie</div>
+                            <div class="product-tagline" style="font-size: 0.75rem; color: #777; margin-top: 4px;">Custom Star Emblem Embroidery</div>
+                        </div>
+                        <div class="product-price">€220</div>
+                    </div>
 
-            <!-- Product 002: Black Hoodie -->
-            <div class="product-card">
-                <div class="product-image-wrapper">
-                    <img src="images/hoodie-black.png" alt="Product 002 | Black">
-                </div>
-                <div class="product-info">
-                    <span class="product-name">Product 002 | Black</span>
-                    <button class="product-action" onclick="alert('Item added to inquiry / bag.')">View</button>
-                </div>
-            </div>
+                    <!-- Color Switcher -->
+                    <div class="color-selector">
+                        <span class="color-label">Color:</span>
+                        <div class="color-options">
+                            <button class="color-btn active" onclick="switchProductVariant('2', 'black', 'images/hoodie-black.png', 'Product 002 | Heavyweight Hoodie (Black)', this)">Black</button>
+                            <button class="color-btn" onclick="switchProductVariant('2', 'white', 'images/hoodie-white.png', 'Product 002 | Heavyweight Hoodie (White)', this)">White</button>
+                        </div>
+                    </div>
 
-            <!-- Product 002: White Hoodie -->
-            <div class="product-card">
-                <div class="product-image-wrapper">
-                    <img src="images/hoodie-white.png" alt="Product 002 | White">
-                </div>
-                <div class="product-info">
-                    <span class="product-name">Product 002 | White</span>
-                    <button class="product-action" onclick="alert('Item added to inquiry / bag.')">View</button>
+                    <!-- Size Selector -->
+                    <div class="size-selector">
+                        <span class="color-label">Size:</span>
+                        <div class="size-options" id="sizes-2">
+                            <button class="size-btn" onclick="selectSize('2', 'XS', this)">XS</button>
+                            <button class="size-btn active" onclick="selectSize('2', 'S', this)">S</button>
+                            <button class="size-btn" onclick="selectSize('2', 'M', this)">M</button>
+                            <button class="size-btn" onclick="selectSize('2', 'L', this)">L</button>
+                        </div>
+                    </div>
+
+                    <button class="add-to-bag-btn" onclick="addToBag('Product 002', '2')">Add to Bag</button>
                 </div>
             </div>
 
         </div>
     </main>
 
+    <!-- Lightbox Modal for Full Image Zoom -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <button class="lightbox-close">&times;</button>
+        <img id="lightbox-img" src="" alt="Zoomed view">
+    </div>
+
     <footer>
         &copy; 2026 THALMAN. All Rights Reserved.
     </footer>
 
+    <script>
+        // Track selected sizes for products
+        const selectedSizes = { '1': 'S', '2': 'S' };
+        const selectedVariants = { '1': 'Charcoal Black', '2': 'Black' };
+
+        function switchProductVariant(productId, colorKey, imageSrc, productTitleText, buttonElement) {
+            // Update image
+            document.getElementById('img-' + productId).src = imageSrc;
+            
+            // Update title text
+            document.getElementById('title-' + productId).innerText = productTitleText;
+            selectedVariants[productId] = colorKey;
+
+            // Handle active button states
+            const parentContainer = buttonElement.parentElement;
+            parentContainer.querySelectorAll('.color-btn').forEach(btn => btn.classList.remove('active'));
+            buttonElement.classList.add('active');
+        }
+
+        function selectSize(productId, size, buttonElement) {
+            selectedSizes[productId] = size;
+            const parentContainer = buttonElement.parentElement;
+            parentContainer.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
+            buttonElement.classList.add('active');
+        }
+
+        function addToBag(productName, productId) {
+            const size = selectedSizes[productId];
+            const variant = selectedVariants[productId];
+            alert(`Added to bag:\n${productName} (${variant}) - Size ${size}`);
+        }
+
+        function openLightbox(src) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightboxImg.src = src;
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+    </script>
 </body>
 </html>
