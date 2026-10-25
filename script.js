@@ -3,22 +3,12 @@ const thalmanStore = {
         currency: 'EUR',
         rates: { EUR: 1, USD: 1.08, GBP: 0.85 },
         symbols: { EUR: '€', USD: '$', GBP: '£' },
-        shippingRates: {
-            DE: 5,   // Germany
-            ES: 8,   // Spain
-            FR: 9,   // France
-            NL: 8,   // Netherlands
-            GB: 10,  // UK
-            UA: 12,  // Ukraine
-            US: 18,  // USA
-            CA: 20,  // Canada
-            AR: 28,  // Argentina
-            BR: 25   // Brazil
-        },
+        shippingRates: { DE: 5, ES: 8, FR: 9, NL: 8, GB: 10, UA: 12, US: 18, CA: 20, AR: 28, BR: 25 },
         activePDPId: null,
         selections: {
             '1': { id: '1', title: 'Product 001 | Structured Denim', variant: 'Charcoal Black', size: 'S', image: 'images/denim-charcoal.png', basePrice: 290 },
-            '2': { id: '2', title: 'Product 002 | Heavyweight Hoodie', variant: 'Black', size: 'S', image: 'images/hoodie-black.png', basePrice: 220 }
+            '2': { id: '2', title: 'Product 002 | Heavyweight Hoodie', variant: 'Black', size: 'S', image: 'images/hoodie-black.png', basePrice: 220 },
+            '3': { id: '3', title: 'Product 003 | National Football Kit', variant: 'Germany', size: 'S', image: 'images/germany.png', basePrice: 180, customName: 'YOUR NAME', customNum: '10' }
         },
         database: {
             '1': {
@@ -35,12 +25,6 @@ const thalmanStore = {
                     { label: 'Fabric Weight', value: '14.5 OZ Heavyweight Rigid Denim' },
                     { label: 'Hardware', value: 'Custom matte-black branded metal buttons' },
                     { label: 'Origin', value: 'Designed in Munich / Crafted in EU' }
-                ],
-                sizeChart: [
-                    { size: 'XS', waist: '72 cm', inseam: '81 cm', legOpening: '28 cm' },
-                    { size: 'S', waist: '76 cm', inseam: '82 cm', legOpening: '29 cm' },
-                    { size: 'M', waist: '82 cm', inseam: '83 cm', legOpening: '30 cm' },
-                    { size: 'L', waist: '88 cm', inseam: '84 cm', legOpening: '31 cm' }
                 ]
             },
             '2': {
@@ -57,12 +41,24 @@ const thalmanStore = {
                     { label: 'Fabric Weight', value: '480 GSM Ultra-Dense French Terry' },
                     { label: 'Embroideries', value: 'Tonal high-density star emblem on chest & sleeve' },
                     { label: 'Origin', value: 'Designed in Munich / Crafted in EU' }
+                ]
+            },
+            '3': {
+                id: '3',
+                name: 'Product 003 | National Football Kit',
+                description: 'Jacquard knit performance match jersey engineered with breathable moisture-wicking weave and custom national emblem detailing. Features live vinyl back-name & number personalization.',
+                basePrice: 180,
+                variants: [
+                    { color: 'Germany', img: 'images/germany.png', class: 'text-germany' },
+                    { color: 'Spain', img: 'images/spain.png', class: 'text-spain' },
+                    { color: 'England', img: 'images/england.png', class: 'text-england' },
+                    { color: 'Ukraine', img: 'images/ukraine.png', class: 'text-ukraine' }
                 ],
-                sizeChart: [
-                    { size: 'XS', chest: '112 cm', length: '64 cm', sleeve: '60 cm' },
-                    { size: 'S', chest: '118 cm', length: '66 cm', sleeve: '62 cm' },
-                    { size: 'M', chest: '124 cm', length: '68 cm', sleeve: '64 cm' },
-                    { size: 'L', chest: '130 cm', length: '70 cm', sleeve: '66 cm' }
+                specs: [
+                    { label: 'Fabric Technology', value: 'Jacquard Knit Technical Polyester' },
+                    { label: 'Customization', value: 'Heat-pressed matte vinyl back print' },
+                    { label: 'Fit Silhouette', value: 'Athletic Match Day Cut' },
+                    { label: 'Origin', value: 'Designed in Munich / Crafted in EU' }
                 ]
             }
         },
@@ -87,7 +83,7 @@ window.toggleBag = thalmanStore.ui.toggleBag;
 window.openLightbox = thalmanStore.ui.openLightbox;
 window.closeLightbox = thalmanStore.ui.closeLightbox;
 
-// Dedicated Product Detail Page (PDP) Navigation
+// Dedicated Product Detail View
 function openProductDetail(id) {
     thalmanStore.state.activePDPId = id;
     const prod = thalmanStore.state.database[id];
@@ -100,7 +96,21 @@ function openProductDetail(id) {
     document.getElementById('pdpPrice').innerText = `${symbol}${Math.round(prod.basePrice * rate)}`;
     document.getElementById('pdpDescription').innerText = prod.description;
 
-    // Color buttons
+    // Toggle Customizer Box visibility for Product 003 (Jersey)
+    const customizerBox = document.getElementById('jerseyCustomizerBox');
+    const pdpJerseyText = document.getElementById('pdpJerseyText');
+    if(id === '3') {
+        customizerBox.style.display = 'block';
+        pdpJerseyText.style.display = 'flex';
+        document.getElementById('jerseyNameInput').value = selection.customName || '';
+        document.getElementById('jerseyNumInput').value = selection.customNum || '';
+        updateJerseyLiveText();
+    } else {
+        customizerBox.style.display = 'none';
+        pdpJerseyText.style.display = 'none';
+    }
+
+    // Color/Edition options
     let colorHtml = '';
     prod.variants.forEach(v => {
         const activeClass = v.color === selection.variant ? 'active' : '';
@@ -108,7 +118,7 @@ function openProductDetail(id) {
     });
     document.getElementById('pdpColorOptions').innerHTML = colorHtml;
 
-    // Size buttons
+    // Size options
     let sizeHtml = '';
     ['XS', 'S', 'M', 'L'].forEach(sz => {
         const activeClass = sz === selection.size ? 'active' : '';
@@ -116,7 +126,7 @@ function openProductDetail(id) {
     });
     document.getElementById('pdpSizeOptions').innerHTML = sizeHtml;
 
-    // Tech spec rows
+    // Spec rows
     let specHtml = '';
     prod.specs.forEach(s => {
         specHtml += `<div class="spec-spec-row"><span>${s.label}</span><span>${s.value}</span></div>`;
@@ -136,11 +146,54 @@ function showCatalogView() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+function updateJerseyLiveText() {
+    const nameVal = (document.getElementById('jerseyNameInput').value || 'YOUR NAME').toUpperCase();
+    const numVal = document.getElementById('jerseyNumInput').value || '10';
+
+    // Store custom selections
+    thalmanStore.state.selections['3'].customName = nameVal;
+    thalmanStore.state.selections['3'].customNum = numVal;
+
+    // Update PDP render
+    const pdpName = document.getElementById('pdpJerseyNameRender');
+    const pdpNum = document.getElementById('pdpJerseyNumRender');
+    if(pdpName) pdpName.innerText = nameVal;
+    if(pdpNum) pdpNum.innerText = numVal;
+
+    // Update Catalog Card render
+    const cardName = document.getElementById('cardJerseyName-3');
+    const cardNum = document.getElementById('cardJerseyNum-3');
+    if(cardName) cardName.innerText = nameVal;
+    if(cardNum) cardNum.innerText = numVal;
+}
+
+function switchJerseyEdition(id, editionName, imgSrc, btnElement, e) {
+    if(e) e.stopPropagation();
+    thalmanStore.state.selections[id].variant = editionName;
+    thalmanStore.state.selections[id].image = imgSrc;
+
+    document.getElementById(`img-${id}`).src = imgSrc;
+
+    const overlayText = document.getElementById(`cardJerseyText-${id}`);
+    if(overlayText) {
+        overlayText.className = `jersey-overlay-text text-${editionName.toLowerCase()}`;
+    }
+
+    const parent = btnElement.parentElement;
+    parent.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
+    btnElement.classList.add('active');
+}
+
 function pdpSelectVariant(id, btn) {
     const { color, img } = btn.dataset;
     thalmanStore.state.selections[id].variant = color;
     thalmanStore.state.selections[id].image = img;
     document.getElementById('pdpMainImg').src = img;
+
+    if(id === '3') {
+        const pdpOverlay = document.getElementById('pdpJerseyText');
+        pdpOverlay.className = `jersey-overlay-text text-${color.toLowerCase()}`;
+    }
 
     const parent = btn.parentElement;
     parent.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
@@ -158,7 +211,17 @@ function pdpSelectSize(id, btn) {
     btn.classList.add('active');
 }
 
-// Size Chart Modal Logic
+function selectSize(id, btnElement, e) {
+    if (e) e.stopPropagation();
+    const { size } = btnElement.dataset;
+    thalmanStore.state.selections[id].size = size;
+
+    const parent = btnElement.parentElement;
+    parent.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
+    btnElement.classList.add('active');
+}
+
+// Modal & Fit Calculator Handlers
 function openSizeChartModal() {
     const id = thalmanStore.state.activePDPId || '1';
     const prod = thalmanStore.state.database[id];
@@ -173,13 +236,21 @@ function openSizeChartModal() {
             <tr><td>M</td><td>82 cm</td><td>83 cm</td><td>30 cm</td></tr>
             <tr><td>L</td><td>88 cm</td><td>84 cm</td><td>31 cm</td></tr>
         `;
-    } else {
+    } else if (id === '2') {
         table.innerHTML = `
             <tr><th>Size</th><th>Chest</th><th>Length</th><th>Sleeve</th></tr>
             <tr><td>XS</td><td>112 cm</td><td>64 cm</td><td>60 cm</td></tr>
             <tr><td>S</td><td>118 cm</td><td>66 cm</td><td>62 cm</td></tr>
             <tr><td>M</td><td>124 cm</td><td>68 cm</td><td>64 cm</td></tr>
             <tr><td>L</td><td>130 cm</td><td>70 cm</td><td>66 cm</td></tr>
+        `;
+    } else {
+        table.innerHTML = `
+            <tr><th>Size</th><th>Chest</th><th>Body Length</th><th>Shoulder Width</th></tr>
+            <tr><td>XS</td><td>104 cm</td><td>68 cm</td><td>44 cm</td></tr>
+            <tr><td>S</td><td>110 cm</td><td>70 cm</td><td>46 cm</td></tr>
+            <tr><td>M</td><td>116 cm</td><td>72 cm</td><td>48 cm</td></tr>
+            <tr><td>L</td><td>122 cm</td><td>74 cm</td><td>50 cm</td></tr>
         `;
     }
 
@@ -192,7 +263,6 @@ function closeSizeChartModal() {
     document.getElementById('sizeChartOverlay').classList.remove('open');
 }
 
-// Fit Calculator Modal Logic (Real German Sizing Standards & Validation)
 function openFitModal() {
     document.getElementById('fitModal').classList.add('open');
     document.getElementById('fitModalOverlay').classList.add('open');
@@ -210,16 +280,13 @@ function calculateFit() {
     const resultBox = document.getElementById('fitResultBox');
     const output = document.getElementById('recommendedSizeOutput');
 
-    // Strict validation to prevent troll/invalid inputs (e.g. 3cm tall)
     if (!height || !weight || height < 120 || height > 230 || weight < 35 || weight > 180) {
         output.innerText = "Please enter realistic height (120-230 cm) and weight (35-180 kg).";
         resultBox.style.display = 'block';
         return;
     }
 
-    // Standard German clothing sizing index calculation (based on height brackets & European sizing proportions)
     let recommended = 'S';
-
     if (height < 168) {
         if (weight < 62) recommended = 'XS';
         else if (weight < 74) recommended = 'S';
@@ -231,22 +298,15 @@ function calculateFit() {
         else if (weight < 94) recommended = 'M';
         else recommended = 'L';
     } else {
-        // Taller frames (183cm+)
         if (weight < 75) recommended = 'S';
         else if (weight < 88) recommended = 'M';
         else recommended = 'L';
-    }
-
-    // Adjust for streetwear silhouette preference
-    if (style === 'cropped' && recommended !== 'XS') {
-        // Step down size for a tighter cropped fit if possible
     }
 
     output.innerText = `${recommended} (German Standard Cut)`;
     resultBox.style.display = 'block';
 }
 
-// Checkout & Payment Validation Gateway
 function openCheckoutGateway() {
     if (thalmanStore.state.cart.length === 0) {
         alert('Your bag is empty.');
@@ -318,30 +378,6 @@ function processPayment(e) {
     renderCart();
 }
 
-function switchVariant(id, btnElement, e) {
-    if (e) e.stopPropagation();
-    const { color, img, title } = btnElement.dataset;
-    thalmanStore.state.selections[id].variant = color;
-    thalmanStore.state.selections[id].image = img;
-
-    document.getElementById(`img-${id}`).src = img;
-    document.getElementById(`title-${id}`).innerText = `${title} (${color})`;
-
-    const parent = btnElement.parentElement;
-    parent.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
-    btnElement.classList.add('active');
-}
-
-function selectSize(id, btnElement, e) {
-    if (e) e.stopPropagation();
-    const { size } = btnElement.dataset;
-    thalmanStore.state.selections[id].size = size;
-
-    const parent = btnElement.parentElement;
-    parent.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
-    btnElement.classList.add('active');
-}
-
 function addToBag(id, name) {
     const itemData = thalmanStore.state.selections[id];
     thalmanStore.state.cart.push({ ...itemData, key: Date.now() });
@@ -379,12 +415,15 @@ function renderCart() {
     thalmanStore.state.cart.forEach((item) => {
         cartSubtotalBase += item.basePrice;
         const convertedItemPrice = Math.round(item.basePrice * rate);
+        const printDetails = item.customName ? `<div class="bag-item-meta" style="color: #4caf50;">Print: ${item.customName} #${item.customNum}</div>` : '';
+        
         cartHtml += `
             <div class="bag-item">
                 <img src="${item.image}" alt="${item.title}">
                 <div class="bag-item-details">
                     <div class="bag-item-title">${item.title}</div>
                     <div class="bag-item-meta">${item.variant} / Size ${item.size}</div>
+                    ${printDetails}
                     <div class="bag-item-meta" style="color: var(--text-main); margin-top: 4px; font-size: 0.75rem;">${symbol}${convertedItemPrice}</div>
                     <button class="bag-item-remove" onclick="removeFromBag(${item.key})">Remove</button>
                 </div>
