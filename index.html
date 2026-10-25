@@ -73,7 +73,7 @@
 
                         <div class="card-action-row">
                             <button class="specs-trigger-btn" onclick="openProductDetail('1')">View Details</button>
-                            <button class="add-btn" onclick="addToBag('1', 'Product 001')">Add To Bag</button>
+                            <button class="add-btn" onclick="addToBag('1')">Add To Bag</button>
                         </div>
                     </div>
                 </div>
@@ -113,42 +113,25 @@
 
                         <div class="card-action-row">
                             <button class="specs-trigger-btn" onclick="openProductDetail('2')">View Details</button>
-                            <button class="add-btn" onclick="addToBag('2', 'Product 002')">Add To Bag</button>
+                            <button class="add-btn" onclick="addToBag('2')">Add To Bag</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- PRODUCT 003: CUSTOM FOOTBALL SHIRTS -->
+                <!-- PRODUCT 003: GERMANY JERSEY -->
                 <div class="product-card" data-product-id="3">
-                    <div class="product-image-container jersey-container" onclick="openProductDetail('3')">
-                        <div class="jersey-preview-wrapper" id="cardJerseyWrapper-3">
-                            <img id="img-3" src="images/germany.png" alt="THALMAN Product 003 Football Jersey">
-                            <div class="jersey-overlay-text text-germany" id="cardJerseyText-3">
-                                <span class="jersey-name-render" id="cardJerseyName-3">YOUR NAME</span>
-                                <span class="jersey-num-render" id="cardJerseyNum-3">10</span>
-                            </div>
-                        </div>
-                        <span class="hover-inspect-badge">Customize Jersey</span>
+                    <div class="product-image-container" onclick="openProductDetail('3')">
+                        <img src="images/germany.png" alt="Product 003 Germany Jersey">[span_4](start_span)[span_4](end_span)
+                        <span class="hover-inspect-badge">Customize & Inspect</span>
                     </div>
                     <div class="product-details">
                         <div class="product-header-row" onclick="openProductDetail('3')" style="cursor: pointer;">
                             <div>
-                                <div class="product-title" id="title-3">Product 003 | National Football Kit</div>
-                                <div class="product-subtitle">Jacquard Performance Jersey</div>
+                                <div class="product-title">Product 003 | Germany Edition Kit</div>
+                                <div class="product-subtitle">Jacquard Performance Match Jersey</div>
                             </div>
                             <div class="product-price" data-base-price="180">€180</div>
                         </div>
-
-                        <div class="selector-group">
-                            <div class="selector-label">Edition</div>
-                            <div class="options-flex">
-                                <button class="opt-btn active" data-color="Germany" data-img="images/germany.png" data-title="Product 003 | National Football Kit" onclick="switchJerseyEdition('3', 'Germany', 'images/germany.png', this, event)">Germany</button>
-                                <button class="opt-btn" data-color="Spain" data-img="images/spain.png" data-title="Product 003 | National Football Kit" onclick="switchJerseyEdition('3', 'Spain', 'images/spain.png', this, event)">Spain</button>
-                                <button class="opt-btn" data-color="England" data-img="images/england.png" data-title="Product 003 | National Football Kit" onclick="switchJerseyEdition('3', 'England', 'images/england.png', this, event)">England</button>
-                                <button class="opt-btn" data-color="Ukraine" data-img="images/ukraine.png" data-title="Product 003 | National Football Kit" onclick="switchJerseyEdition('3', 'Ukraine', 'images/ukraine.png', this, event)">Ukraine</button>
-                            </div>
-                        </div>
-
                         <div class="selector-group">
                             <div class="selector-label">Size</div>
                             <div class="options-flex" id="sizes-3">
@@ -158,10 +141,99 @@
                                 <button class="opt-btn" data-size="L" onclick="selectSize('3', this, event)">L</button>
                             </div>
                         </div>
-
                         <div class="card-action-row">
                             <button class="specs-trigger-btn" onclick="openProductDetail('3')">Customize</button>
-                            <button class="add-btn" onclick="addToBag('3', 'Product 003')">Add To Bag</button>
+                            <button class="add-btn" onclick="addToBag('3')">Add To Bag</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PRODUCT 004: SPAIN JERSEY -->
+                <div class="product-card" data-product-id="4">
+                    <div class="product-image-container" onclick="openProductDetail('4')">
+                        <img src="images/spain.png" alt="Product 004 Spain Jersey">[span_5](start_span)[span_5](end_span)
+                        <span class="hover-inspect-badge">Customize & Inspect</span>
+                    </div>
+                    <div class="product-details">
+                        <div class="product-header-row" onclick="openProductDetail('4')" style="cursor: pointer;">
+                            <div>
+                                <div class="product-title">Product 004 | Spain Edition Kit</div>
+                                <div class="product-subtitle">Jacquard Performance Match Jersey</div>
+                            </div>
+                            <div class="product-price" data-base-price="180">€180</div>
+                        </div>
+                        <div class="selector-group">
+                            <div class="selector-label">Size</div>
+                            <div class="options-flex" id="sizes-4">
+                                <button class="opt-btn" data-size="XS" onclick="selectSize('4', this, event)">XS</button>
+                                <button class="opt-btn active" data-size="S" onclick="selectSize('4', this, event)">S</button>
+                                <button class="opt-btn" data-size="M" onclick="selectSize('4', this, event)">M</button>
+                                <button class="opt-btn" data-size="L" onclick="selectSize('4', this, event)">L</button>
+                            </div>
+                        </div>
+                        <div class="card-action-row">
+                            <button class="specs-trigger-btn" onclick="openProductDetail('4')">Customize</button>
+                            <button class="add-btn" onclick="addToBag('4')">Add To Bag</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PRODUCT 005: ENGLAND JERSEY -->
+                <div class="product-card" data-product-id="5">
+                    <div class="product-image-container" onclick="openProductDetail('5')">
+                        <img src="images/england.png" alt="Product 005 England Jersey">[span_6](start_span)[span_6](end_span)
+                        <span class="hover-inspect-badge">Customize & Inspect</span>
+                    </div>
+                    <div class="product-details">
+                        <div class="product-header-row" onclick="openProductDetail('5')" style="cursor: pointer;">
+                            <div>
+                                <div class="product-title">Product 005 | England Edition Kit</div>
+                                <div class="product-subtitle">Jacquard Performance Match Jersey</div>
+                            </div>
+                            <div class="product-price" data-base-price="180">€180</div>
+                        </div>
+                        <div class="selector-group">
+                            <div class="selector-label">Size</div>
+                            <div class="options-flex" id="sizes-5">
+                                <button class="opt-btn" data-size="XS" onclick="selectSize('5', this, event)">XS</button>
+                                <button class="opt-btn active" data-size="S" onclick="selectSize('5', this, event)">S</button>
+                                <button class="opt-btn" data-size="M" onclick="selectSize('5', this, event)">M</button>
+                                <button class="opt-btn" data-size="L" onclick="selectSize('5', this, event)">L</button>
+                            </div>
+                        </div>
+                        <div class="card-action-row">
+                            <button class="specs-trigger-btn" onclick="openProductDetail('5')">Customize</button>
+                            <button class="add-btn" onclick="addToBag('5')">Add To Bag</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PRODUCT 006: UKRAINE JERSEY -->
+                <div class="product-card" data-product-id="6">
+                    <div class="product-image-container" onclick="openProductDetail('6')">
+                        <img src="images/ukraine.png" alt="Product 006 Ukraine Jersey">[span_7](start_span)[span_7](end_span)
+                        <span class="hover-inspect-badge">Customize & Inspect</span>
+                    </div>
+                    <div class="product-details">
+                        <div class="product-header-row" onclick="openProductDetail('6')" style="cursor: pointer;">
+                            <div>
+                                <div class="product-title">Product 006 | Ukraine Edition Kit</div>
+                                <div class="product-subtitle">Jacquard Performance Match Jersey</div>
+                            </div>
+                            <div class="product-price" data-base-price="180">€180</div>
+                        </div>
+                        <div class="selector-group">
+                            <div class="selector-label">Size</div>
+                            <div class="options-flex" id="sizes-6">
+                                <button class="opt-btn" data-size="XS" onclick="selectSize('6', this, event)">XS</button>
+                                <button class="opt-btn active" data-size="S" onclick="selectSize('6', this, event)">S</button>
+                                <button class="opt-btn" data-size="M" onclick="selectSize('6', this, event)">M</button>
+                                <button class="opt-btn" data-size="L" onclick="selectSize('6', this, event)">L</button>
+                            </div>
+                        </div>
+                        <div class="card-action-row">
+                            <button class="specs-trigger-btn" onclick="openProductDetail('6')">Customize</button>
+                            <button class="add-btn" onclick="addToBag('6')">Add To Bag</button>
                         </div>
                     </div>
                 </div>
@@ -187,14 +259,8 @@
             <button class="back-link" onclick="showCatalogView()">&larr; Back to Collection</button>
             <div class="pdp-grid">
                 <div class="pdp-gallery">
-                    <div class="pdp-main-img-box jersey-container" onclick="openLightbox(document.getElementById('pdpMainImg').src)">
-                        <div class="jersey-preview-wrapper" id="pdpJerseyWrapper">
-                            <img id="pdpMainImg" src="" alt="Main Product Photo">
-                            <div class="jersey-overlay-text" id="pdpJerseyText" style="display: none;">
-                                <span class="jersey-name-render" id="pdpJerseyNameRender">YOUR NAME</span>
-                                <span class="jersey-num-render" id="pdpJerseyNumRender">10</span>
-                            </div>
-                        </div>
+                    <div class="pdp-main-img-box" onclick="openLightbox(document.getElementById('pdpMainImg').src)">
+                        <img id="pdpMainImg" src="" alt="Main Product Photo">
                     </div>
                 </div>
                 <div class="pdp-info-panel">
@@ -205,21 +271,21 @@
 
                     <!-- CUSTOMIZATION INPUTS (Shown on Football Shirts) -->
                     <div id="jerseyCustomizerBox" class="jersey-customizer-box" style="display: none;">
-                        <span class="modal-tag">LIVE PRINT CUSTOMIZATION</span>
-                        <div class="checkout-row-2">
+                        <span class="modal-tag">NAME & NUMBER CUSTOMIZATION (10p per character)</span>
+                        <div class="checkout-row-2" style="margin-top: 10px;">
                             <div class="fit-form-group">
                                 <label>Name on Back</label>
-                                <input type="text" id="jerseyNameInput" maxlength="12" placeholder="YOUR NAME" oninput="updateJerseyLiveText()">
+                                <input type="text" id="jerseyNameInput" maxlength="12" placeholder="YOUR NAME" oninput="updateJerseyCustomization()">
                             </div>
                             <div class="fit-form-group">
                                 <label>Number (0-99)</label>
-                                <input type="text" id="jerseyNumInput" maxlength="2" placeholder="10" oninput="updateJerseyLiveText()">
+                                <input type="text" id="jerseyNumInput" maxlength="2" placeholder="10" oninput="updateJerseyCustomization()">
                             </div>
                         </div>
                     </div>
 
-                    <div class="selector-group" style="margin-top: 25px;">
-                        <div class="selector-label">Edition</div>
+                    <div class="selector-group" id="colorSelectorGroup" style="margin-top: 25px; display: none;">
+                        <div class="selector-label">Color</div>
                         <div class="options-flex" id="pdpColorOptions"></div>
                     </div>
 
