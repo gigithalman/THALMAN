@@ -26,7 +26,10 @@
         <div class="logo-container">
             <img src="images/logo.png" alt="THALMAN Logo">
         </div>
-        <button class="bag-trigger" onclick="toggleBag()">Bag (<span id="bagCount">0</span>)</button>
+        <div class="header-right">
+            <button class="bag-trigger" onclick="openFitModal()" style="margin-right: 10px;">Fit Calculator</button>
+            <button class="bag-trigger" onclick="toggleBag()">Bag (<span id="bagCount">0</span>)</button>
+        </div>
     </header>
 
     <main class="container">
@@ -64,7 +67,10 @@
                         </div>
                     </div>
 
-                    <button class="add-btn" onclick="addToBag('1', 'Product 001')">Add To Bag</button>
+                    <div class="card-action-row">
+                        <button class="specs-trigger-btn" onclick="openSpecModal('1')">Inspect Specs</button>
+                        <button class="add-btn" onclick="addToBag('1', 'Product 001')">Add To Bag</button>
+                    </div>
                 </div>
             </div>
 
@@ -100,7 +106,10 @@
                         </div>
                     </div>
 
-                    <button class="add-btn" onclick="addToBag('2', 'Product 002')">Add To Bag</button>
+                    <div class="card-action-row">
+                        <button class="specs-trigger-btn" onclick="openSpecModal('2')">Inspect Specs</button>
+                        <button class="add-btn" onclick="addToBag('2', 'Product 002')">Add To Bag</button>
+                    </div>
                 </div>
             </div>
 
@@ -119,6 +128,51 @@
             </div>
         </section>
     </main>
+
+    <!-- SPEC MODAL -->
+    <div class="modal-overlay" id="specModalOverlay" onclick="closeSpecModal()"></div>
+    <div class="technical-modal" id="specModal">
+        <button class="modal-close" onclick="closeSpecModal()">&times;</button>
+        <div class="modal-header">
+            <span class="modal-tag">DESIGN STUDIO ARCHIVE</span>
+            <h2 id="specTitle">Technical Specifications</h2>
+        </div>
+        <div class="modal-body" id="specContent">
+            <!-- Dynamically populated -->
+        </div>
+    </div>
+
+    <!-- FIT CALCULATOR MODAL -->
+    <div class="modal-overlay" id="fitModalOverlay" onclick="closeFitModal()"></div>
+    <div class="technical-modal" id="fitModal">
+        <button class="modal-close" onclick="closeFitModal()">&times;</button>
+        <div class="modal-header">
+            <span class="modal-tag">SMART SIZING ENGINE</span>
+            <h2>Fit Calculator</h2>
+        </div>
+        <div class="modal-body">
+            <div class="fit-form-group">
+                <label>Height (cm)</label>
+                <input type="number" id="userHeight" placeholder="e.g. 175" value="170">
+            </div>
+            <div class="fit-form-group">
+                <label>Weight (kg)</label>
+                <input type="number" id="userWeight" placeholder="e.g. 60" value="60">
+            </div>
+            <div class="fit-form-group">
+                <label>Preferred Silhouette</label>
+                <select id="userFitStyle">
+                    <option value="standard">Standard / True to Size</option>
+                    <option value="oversized">Heavy Oversized (Drop Shoulder)</option>
+                    <option value="cropped">Cropped / Tailored Fit</option>
+                </select>
+            </div>
+            <button class="add-btn" onclick="calculateFit()" style="margin-top: 10px;">Calculate Recommended Size</button>
+            <div id="fitResultBox" class="fit-result-box" style="display: none;">
+                Recommended Size: <span id="recommendedSizeOutput" style="font-weight: 700; color: var(--accent);"></span>
+            </div>
+        </div>
+    </div>
 
     <!-- Bag Drawer -->
     <div class="drawer-overlay" id="drawerOverlay" onclick="toggleBag()"></div>
