@@ -7,6 +7,30 @@ const thalmanStore = {
             '1': { id: '1', title: 'Product 001 | Structured Denim', variant: 'Charcoal Black', size: 'S', image: 'images/denim-charcoal.png', basePrice: 290 },
             '2': { id: '2', title: 'Product 002 | Heavyweight Hoodie', variant: 'Black', size: 'S', image: 'images/hoodie-black.png', basePrice: 220 }
         },
+        specsDatabase: {
+            '1': {
+                name: 'Product 001 | Structured Denim',
+                specs: [
+                    { label: 'Material Composition', value: '100% Japanese Selvedge Cotton' },
+                    { label: 'Fabric Weight', value: '14.5 OZ Heavyweight Rigid Denim' },
+                    { label: 'Construction', value: 'Anatomical curved paneling with rivet reinforcement' },
+                    { label: 'Hardware', value: 'Custom matte-black branded metal buttons' },
+                    { label: 'Care Instructions', value: 'Cold wash inside out. Hang dry only.' },
+                    { label: 'Origin', value: 'Designed in Munich / Crafted in EU' }
+                ]
+            },
+            '2': {
+                name: 'Product 002 | Heavyweight Hoodie',
+                specs: [
+                    { label: 'Material Composition', value: '100% Combed Organic Cotton' },
+                    { label: 'Fabric Weight', value: '480 GSM Ultra-Dense French Terry' },
+                    { label: 'Embroideries', value: 'Tonal high-density star emblem on chest & sleeve' },
+                    { label: 'Finishing', value: 'Vintage garment wash treatment with raw edges' },
+                    { label: 'Care Instructions', value: 'Machine wash delicate at 30°C. Do not tumble dry.' },
+                    { label: 'Origin', value: 'Designed in Munich / Crafted in EU' }
+                ]
+            }
+        },
         cart: []
     },
     ui: {
@@ -28,7 +52,65 @@ window.toggleBag = thalmanStore.ui.toggleBag;
 window.openLightbox = thalmanStore.ui.openLightbox;
 window.closeLightbox = thalmanStore.ui.closeLightbox;
 
-// Light / Dark Mode Toggle
+// Technical Spec Modal Logic
+function openSpecModal(productId) {
+    const data = thalmanStore.state.specsDatabase[productId];
+    document.getElementById('specTitle').innerText = data.name;
+    
+    let html = '';
+    data.specs.forEach(s => {
+        html += `<div class="spec-spec-row"><span>${s.label}</span><span>${s.value}</span></div>`;
+    });
+    
+    document.getElementById('specContent').innerHTML = html;
+    document.getElementById('specModal').classList.add('open');
+    document.getElementById('specModalOverlay').classList.add('open');
+}
+
+function closeSpecModal() {
+    document.getElementById('specModal').classList.remove('open');
+    document.getElementById('specModalOverlay').classList.remove('open');
+}
+
+// Fit Calculator Modal Logic
+function openFitModal() {
+    document.getElementById('fitModal').classList.add('open');
+    document.getElementById('fitModalOverlay').classList.add('open');
+}
+
+function closeFitModal() {
+    document.getElementById('fitModal').classList.remove('open');
+    document.getElementById('fitModalOverlay').classList.remove('open');
+}
+
+function calculateFit() {
+    const height = parseFloat(document.getElementById('userHeight').value);
+    const weight = parseFloat(document.getElementById('userWeight').value);
+    const style = document.getElementById('userFitStyle').value;
+    
+    if(!height || !weight) {
+        alert('Please enter valid height and weight values.');
+        return;
+    }
+
+    // Basic sizing logic algorithm based on proportions & preference
+    let score = (weight / (height / 100)) * 1.2;
+    if(style === 'oversized') score -= 2;
+    if(style === 'cropped') score += 2;
+
+    let recommended = 'S';
+    if (score < 18) recommended = 'XS';
+    else if (score >= 18 && score < 22) recommended = 'S';
+    else if (score >= 22 && score < 26) recommended = 'M';
+    else recommended = 'L';
+
+    const resultBox = document.getElementById('fitResultBox');
+    const output = document.getElementById('recommendedSizeOutput');
+    output.innerText = recommended + (style === 'oversized' ? ' (Generous Drop Shoulder)' : '');
+    resultBox.style.display = 'block';
+}
+
+// Theme Toggle
 function toggleTheme() {
     const html = document.documentElement;
     const btn = document.getElementById('themeToggleBtn');
@@ -41,21 +123,21 @@ function toggleTheme() {
     }
 }
 
-// Live User Simulation Counter
+// Live User Counter
 function initLiveCounter() {
-    let count = Math.floor(Math.random() * 8) + 12; // Start between 12-19
+    let count = Math.floor(Math.random() * 8) + 12;
     const counterEl = document.getElementById('userCount');
     if(counterEl) {
         counterEl.innerText = count;
         setInterval(() => {
-            const fluctuation = Math.floor(Math.random() * 3) - 1; // -1, 0, or +1
+            const fluctuation = Math.floor(Math.random() * 3) - 1;
             count = Math.max(8, count + fluctuation);
             counterEl.innerText = count;
         }, 5000);
     }
 }
 
-// Newsletter Signup Handler
+// Newsletter Handler
 function handleNewsletter(event) {
     event.preventDefault();
     const emailInput = document.getElementById('subscriberEmail');
@@ -63,9 +145,7 @@ function handleNewsletter(event) {
     if(emailInput.value) {
         successMsg.style.display = 'block';
         emailInput.value = '';
-        setTimeout(() => {
-            successMsg.style.display = 'none';
-        }, 5000);
+        setTimeout(() => { successMsg.style.display = 'none'; }, 5000);
     }
 }
 
