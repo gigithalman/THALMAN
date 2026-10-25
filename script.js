@@ -8,7 +8,10 @@ const thalmanStore = {
         selections: {
             '1': { id: '1', title: 'Product 001 | Structured Denim', variant: 'Charcoal Black', size: 'S', image: 'images/denim-charcoal.png', basePrice: 290 },
             '2': { id: '2', title: 'Product 002 | Heavyweight Hoodie', variant: 'Black', size: 'S', image: 'images/hoodie-black.png', basePrice: 220 },
-            '3': { id: '3', title: 'Product 003 | National Football Kit', variant: 'Germany', size: 'S', image: 'images/germany.png', basePrice: 180, customName: 'YOUR NAME', customNum: '10' }
+            '3': { id: '3', title: 'Product 003 | Germany Kit', size: 'S', image: 'images/germany.png', basePrice: 180, customName: '', customNum: '10' },
+            '4': { id: '4', title: 'Product 004 | Spain Kit', size: 'S', image: 'images/spain.png', basePrice: 180, customName: '', customNum: '10' },
+            '5': { id: '5', title: 'Product 005 | England Kit', size: 'S', image: 'images/england.png', basePrice: 180, customName: '', customNum: '10' },
+            '6': { id: '6', title: 'Product 006 | Ukraine Kit', size: 'S', image: 'images/ukraine.png', basePrice: 180, customName: '', customNum: '10' }
         },
         database: {
             '1': {
@@ -45,18 +48,48 @@ const thalmanStore = {
             },
             '3': {
                 id: '3',
-                name: 'Product 003 | National Football Kit',
-                description: 'Jacquard knit performance match jersey engineered with breathable moisture-wicking weave and custom national emblem detailing. Features live vinyl back-name & number personalization.',
+                name: 'Product 003 | Germany Edition Kit',
+                description: 'Jacquard knit performance match jersey engineered with breathable moisture-wicking weave and custom national emblem detailing.',
                 basePrice: 180,
-                variants: [
-                    { color: 'Germany', img: 'images/germany.png', class: 'text-germany' },
-                    { color: 'Spain', img: 'images/spain.png', class: 'text-spain' },
-                    { color: 'England', img: 'images/england.png', class: 'text-england' },
-                    { color: 'Ukraine', img: 'images/ukraine.png', class: 'text-ukraine' }
-                ],
                 specs: [
                     { label: 'Fabric Technology', value: 'Jacquard Knit Technical Polyester' },
-                    { label: 'Customization', value: 'Heat-pressed matte vinyl back print' },
+                    { label: 'Customization', value: '10p per character name/number print' },
+                    { label: 'Fit Silhouette', value: 'Athletic Match Day Cut' },
+                    { label: 'Origin', value: 'Designed in Munich / Crafted in EU' }
+                ]
+            },
+            '4': {
+                id: '4',
+                name: 'Product 004 | Spain Edition Kit',
+                description: 'Jacquard knit performance match jersey engineered with breathable moisture-wicking weave and custom national emblem detailing.',
+                basePrice: 180,
+                specs: [
+                    { label: 'Fabric Technology', value: 'Jacquard Knit Technical Polyester' },
+                    { label: 'Customization', value: '10p per character name/number print' },
+                    { label: 'Fit Silhouette', value: 'Athletic Match Day Cut' },
+                    { label: 'Origin', value: 'Designed in Munich / Crafted in EU' }
+                ]
+            },
+            '5': {
+                id: '5',
+                name: 'Product 005 | England Edition Kit',
+                description: 'Jacquard knit performance match jersey engineered with breathable moisture-wicking weave and custom national emblem detailing.',
+                basePrice: 180,
+                specs: [
+                    { label: 'Fabric Technology', value: 'Jacquard Knit Technical Polyester' },
+                    { label: 'Customization', value: '10p per character name/number print' },
+                    { label: 'Fit Silhouette', value: 'Athletic Match Day Cut' },
+                    { label: 'Origin', value: 'Designed in Munich / Crafted in EU' }
+                ]
+            },
+            '6': {
+                id: '6',
+                name: 'Product 006 | Ukraine Edition Kit',
+                description: 'Jacquard knit performance match jersey engineered with breathable moisture-wicking weave and custom national emblem detailing.',
+                basePrice: 180,
+                specs: [
+                    { label: 'Fabric Technology', value: 'Jacquard Knit Technical Polyester' },
+                    { label: 'Customization', value: '10p per character name/number print' },
                     { label: 'Fit Silhouette', value: 'Athletic Match Day Cut' },
                     { label: 'Origin', value: 'Designed in Munich / Crafted in EU' }
                 ]
@@ -83,6 +116,17 @@ window.toggleBag = thalmanStore.ui.toggleBag;
 window.openLightbox = thalmanStore.ui.openLightbox;
 window.closeLightbox = thalmanStore.ui.closeLightbox;
 
+function getDynamicPrice(id) {
+    const prod = thalmanStore.state.database[id];
+    let price = prod.basePrice;
+    if(['3', '4', '5', '6'].includes(id)) {
+        const nameLen = (thalmanStore.state.selections[id].customName || '').trim().length;
+        // 10p per character added to base price
+        price += nameLen * 0.10;
+    }
+    return price;
+}
+
 // Dedicated Product Detail View
 function openProductDetail(id) {
     thalmanStore.state.activePDPId = id;
@@ -91,32 +135,44 @@ function openProductDetail(id) {
     const symbol = thalmanStore.state.symbols[thalmanStore.state.currency];
     const rate = thalmanStore.state.rates[thalmanStore.state.currency];
 
-    document.getElementById('pdpMainImg').src = selection.image;
+    let imgSrc = selection.image;
+    if(id === '1') imgSrc = selection.image;
+    else if(id === '2') imgSrc = selection.image;
+    else if(id === '3') imgSrc = 'images/germany.png';
+    else if(id === '4') imgSrc = 'images/spain.png';
+    else if(id === '5') imgSrc = 'images/england.png';
+    else if(id === '6') imgSrc = 'images/ukraine.png';
+
+    document.getElementById('pdpMainImg').src = imgSrc;
     document.getElementById('pdpTitle').innerText = prod.name;
-    document.getElementById('pdpPrice').innerText = `${symbol}${Math.round(prod.basePrice * rate)}`;
+    
+    const currentPrice = getDynamicPrice(id);
+    document.getElementById('pdpPrice').innerText = `${symbol}${(currentPrice * rate).toFixed(2)}`;
     document.getElementById('pdpDescription').innerText = prod.description;
 
-    // Toggle Customizer Box visibility for Product 003 (Jersey)
+    // Customizer Box for Jerseys (3, 4, 5, 6)
     const customizerBox = document.getElementById('jerseyCustomizerBox');
-    const pdpJerseyText = document.getElementById('pdpJerseyText');
-    if(id === '3') {
+    if(['3', '4', '5', '6'].includes(id)) {
         customizerBox.style.display = 'block';
-        pdpJerseyText.style.display = 'flex';
         document.getElementById('jerseyNameInput').value = selection.customName || '';
         document.getElementById('jerseyNumInput').value = selection.customNum || '';
-        updateJerseyLiveText();
     } else {
         customizerBox.style.display = 'none';
-        pdpJerseyText.style.display = 'none';
     }
 
-    // Color/Edition options
-    let colorHtml = '';
-    prod.variants.forEach(v => {
-        const activeClass = v.color === selection.variant ? 'active' : '';
-        colorHtml += `<button class="opt-btn ${activeClass}" data-color="${v.color}" data-img="${v.img}" onclick="pdpSelectVariant('${id}', this)">${v.color}</button>`;
-    });
-    document.getElementById('pdpColorOptions').innerHTML = colorHtml;
+    // Color/Variant selector if applicable
+    const colorGroup = document.getElementById('colorSelectorGroup');
+    if(prod.variants) {
+        colorGroup.style.display = 'flex';
+        let colorHtml = '';
+        prod.variants.forEach(v => {
+            const activeClass = v.color === selection.variant ? 'active' : '';
+            colorHtml += `<button class="opt-btn ${activeClass}" data-color="${v.color}" data-img="${v.img}" onclick="pdpSelectVariant('${id}', this)">${v.color}</button>`;
+        });
+        document.getElementById('pdpColorOptions').innerHTML = colorHtml;
+    } else {
+        colorGroup.style.display = 'none';
+    }
 
     // Size options
     let sizeHtml = '';
@@ -133,7 +189,7 @@ function openProductDetail(id) {
     });
     document.getElementById('pdpSpecRows').innerHTML = specHtml;
 
-    document.getElementById('pdpAddBtn').onclick = () => addToBag(id, prod.name);
+    document.getElementById('pdpAddBtn').onclick = () => addToBag(id);
 
     document.getElementById('catalogView').style.display = 'none';
     document.getElementById('productDetailView').style.display = 'block';
@@ -146,42 +202,19 @@ function showCatalogView() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function updateJerseyLiveText() {
-    const nameVal = (document.getElementById('jerseyNameInput').value || 'YOUR NAME').toUpperCase();
-    const numVal = document.getElementById('jerseyNumInput').value || '10';
+function updateJerseyCustomization() {
+    const id = thalmanStore.state.activePDPId;
+    const nameVal = document.getElementById('jerseyNameInput').value.toUpperCase();
+    const numVal = document.getElementById('jerseyNumInput').value;
 
-    // Store custom selections
-    thalmanStore.state.selections['3'].customName = nameVal;
-    thalmanStore.state.selections['3'].customNum = numVal;
+    thalmanStore.state.selections[id].customName = nameVal;
+    thalmanStore.state.selections[id].customNum = numVal;
 
-    // Update PDP render
-    const pdpName = document.getElementById('pdpJerseyNameRender');
-    const pdpNum = document.getElementById('pdpJerseyNumRender');
-    if(pdpName) pdpName.innerText = nameVal;
-    if(pdpNum) pdpNum.innerText = numVal;
-
-    // Update Catalog Card render
-    const cardName = document.getElementById('cardJerseyName-3');
-    const cardNum = document.getElementById('cardJerseyNum-3');
-    if(cardName) cardName.innerText = nameVal;
-    if(cardNum) cardNum.innerText = numVal;
-}
-
-function switchJerseyEdition(id, editionName, imgSrc, btnElement, e) {
-    if(e) e.stopPropagation();
-    thalmanStore.state.selections[id].variant = editionName;
-    thalmanStore.state.selections[id].image = imgSrc;
-
-    document.getElementById(`img-${id}`).src = imgSrc;
-
-    const overlayText = document.getElementById(`cardJerseyText-${id}`);
-    if(overlayText) {
-        overlayText.className = `jersey-overlay-text text-${editionName.toLowerCase()}`;
-    }
-
-    const parent = btnElement.parentElement;
-    parent.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
-    btnElement.classList.add('active');
+    // Update PDP price live including 10p per character
+    const symbol = thalmanStore.state.symbols[thalmanStore.state.currency];
+    const rate = thalmanStore.state.rates[thalmanStore.state.currency];
+    const currentPrice = getDynamicPrice(id);
+    document.getElementById('pdpPrice').innerText = `${symbol}${(currentPrice * rate).toFixed(2)}`;
 }
 
 function pdpSelectVariant(id, btn) {
@@ -190,16 +223,9 @@ function pdpSelectVariant(id, btn) {
     thalmanStore.state.selections[id].image = img;
     document.getElementById('pdpMainImg').src = img;
 
-    if(id === '3') {
-        const pdpOverlay = document.getElementById('pdpJerseyText');
-        pdpOverlay.className = `jersey-overlay-text text-${color.toLowerCase()}`;
-    }
-
     const parent = btn.parentElement;
     parent.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
-
-    document.getElementById(`img-${id}`).src = img;
 }
 
 function pdpSelectSize(id, btn) {
@@ -331,7 +357,7 @@ function updateShippingCost() {
     const rate = thalmanStore.state.rates[thalmanStore.state.currency];
 
     let itemsBaseSubtotal = 0;
-    thalmanStore.state.cart.forEach(i => itemsBaseSubtotal += i.basePrice);
+    thalmanStore.state.cart.forEach(i => itemsBaseSubtotal += i.finalPrice);
 
     const convertedSubtotal = Math.round(itemsBaseSubtotal * rate);
     const convertedShipping = Math.round(baseShipEUR * rate);
@@ -378,9 +404,17 @@ function processPayment(e) {
     renderCart();
 }
 
-function addToBag(id, name) {
+function addToBag(id) {
     const itemData = thalmanStore.state.selections[id];
-    thalmanStore.state.cart.push({ ...itemData, key: Date.now() });
+    const prod = thalmanStore.state.database[id];
+    const finalPrice = getDynamicPrice(id);
+
+    thalmanStore.state.cart.push({
+        ...itemData,
+        title: prod.name,
+        finalPrice: finalPrice,
+        key: Date.now()
+    });
     updateBagCount();
     renderCart();
     toggleBag();
@@ -413,8 +447,8 @@ function renderCart() {
     let cartSubtotalBase = 0;
 
     thalmanStore.state.cart.forEach((item) => {
-        cartSubtotalBase += item.basePrice;
-        const convertedItemPrice = Math.round(item.basePrice * rate);
+        cartSubtotalBase += item.finalPrice;
+        const convertedItemPrice = Math.round(item.finalPrice * rate);
         const printDetails = item.customName ? `<div class="bag-item-meta" style="color: #4caf50;">Print: ${item.customName} #${item.customNum}</div>` : '';
         
         cartHtml += `
@@ -422,7 +456,7 @@ function renderCart() {
                 <img src="${item.image}" alt="${item.title}">
                 <div class="bag-item-details">
                     <div class="bag-item-title">${item.title}</div>
-                    <div class="bag-item-meta">${item.variant} / Size ${item.size}</div>
+                    <div class="bag-item-meta">${item.variant ? item.variant + ' / ' : ''}Size ${item.size}</div>
                     ${printDetails}
                     <div class="bag-item-meta" style="color: var(--text-main); margin-top: 4px; font-size: 0.75rem;">${symbol}${convertedItemPrice}</div>
                     <button class="bag-item-remove" onclick="removeFromBag(${item.key})">Remove</button>
@@ -448,8 +482,8 @@ function updateCurrency() {
     });
 
     if(thalmanStore.state.activePDPId) {
-        const prod = thalmanStore.state.database[thalmanStore.state.activePDPId];
-        document.getElementById('pdpPrice').innerText = `${symbol}${Math.round(prod.basePrice * rate)}`;
+        const currentPrice = getDynamicPrice(thalmanStore.state.activePDPId);
+        document.getElementById('pdpPrice').innerText = `${symbol}${(currentPrice * rate).toFixed(2)}`;
     }
 
     renderCart();
