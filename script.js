@@ -3,31 +3,66 @@ const thalmanStore = {
         currency: 'EUR',
         rates: { EUR: 1, USD: 1.08, GBP: 0.85 },
         symbols: { EUR: '€', USD: '$', GBP: '£' },
+        shippingRates: {
+            DE: 5,   // Germany
+            ES: 8,   // Spain
+            FR: 9,   // France
+            NL: 8,   // Netherlands
+            GB: 10,  // UK
+            UA: 12,  // Ukraine
+            US: 18,  // USA
+            CA: 20,  // Canada
+            AR: 28,  // Argentina
+            BR: 25   // Brazil
+        },
+        activePDPId: null,
         selections: {
             '1': { id: '1', title: 'Product 001 | Structured Denim', variant: 'Charcoal Black', size: 'S', image: 'images/denim-charcoal.png', basePrice: 290 },
             '2': { id: '2', title: 'Product 002 | Heavyweight Hoodie', variant: 'Black', size: 'S', image: 'images/hoodie-black.png', basePrice: 220 }
         },
-        specsDatabase: {
+        database: {
             '1': {
+                id: '1',
                 name: 'Product 001 | Structured Denim',
+                description: 'Engineered with anatomical curved seam paneling and reinforced rivet construction. Cut from raw 14.5 oz Japanese selvedge denim in a relaxed architectural silhouette.',
+                basePrice: 290,
+                variants: [
+                    { color: 'Charcoal Black', img: 'images/denim-charcoal.png' },
+                    { color: 'Medium Wash Blue', img: 'images/denim-blue.png' }
+                ],
                 specs: [
                     { label: 'Material Composition', value: '100% Japanese Selvedge Cotton' },
                     { label: 'Fabric Weight', value: '14.5 OZ Heavyweight Rigid Denim' },
-                    { label: 'Construction', value: 'Anatomical curved paneling with rivet reinforcement' },
                     { label: 'Hardware', value: 'Custom matte-black branded metal buttons' },
-                    { label: 'Care Instructions', value: 'Cold wash inside out. Hang dry only.' },
                     { label: 'Origin', value: 'Designed in Munich / Crafted in EU' }
+                ],
+                sizeChart: [
+                    { size: 'XS', waist: '72 cm', inseam: '81 cm', legOpening: '28 cm' },
+                    { size: 'S', waist: '76 cm', inseam: '82 cm', legOpening: '29 cm' },
+                    { size: 'M', waist: '82 cm', inseam: '83 cm', legOpening: '30 cm' },
+                    { size: 'L', waist: '88 cm', inseam: '84 cm', legOpening: '31 cm' }
                 ]
             },
             '2': {
+                id: '2',
                 name: 'Product 002 | Heavyweight Hoodie',
+                description: 'Custom drop-shoulder heavyweight hoodie crafted from 480 GSM organic French Terry cotton. Features tonal star emblem embroidery on chest and forearms.',
+                basePrice: 220,
+                variants: [
+                    { color: 'Black', img: 'images/hoodie-black.png' },
+                    { color: 'White', img: 'images/hoodie-white.png' }
+                ],
                 specs: [
                     { label: 'Material Composition', value: '100% Combed Organic Cotton' },
                     { label: 'Fabric Weight', value: '480 GSM Ultra-Dense French Terry' },
                     { label: 'Embroideries', value: 'Tonal high-density star emblem on chest & sleeve' },
-                    { label: 'Finishing', value: 'Vintage garment wash treatment with raw edges' },
-                    { label: 'Care Instructions', value: 'Machine wash delicate at 30°C. Do not tumble dry.' },
                     { label: 'Origin', value: 'Designed in Munich / Crafted in EU' }
+                ],
+                sizeChart: [
+                    { size: 'XS', chest: '112 cm', length: '64 cm', sleeve: '60 cm' },
+                    { size: 'S', chest: '118 cm', length: '66 cm', sleeve: '62 cm' },
+                    { size: 'M', chest: '124 cm', length: '68 cm', sleeve: '64 cm' },
+                    { size: 'L', chest: '130 cm', length: '70 cm', sleeve: '66 cm' }
                 ]
             }
         },
@@ -52,24 +87,111 @@ window.toggleBag = thalmanStore.ui.toggleBag;
 window.openLightbox = thalmanStore.ui.openLightbox;
 window.closeLightbox = thalmanStore.ui.closeLightbox;
 
-// Technical Spec Modal Logic
-function openSpecModal(productId) {
-    const data = thalmanStore.state.specsDatabase[productId];
-    document.getElementById('specTitle').innerText = data.name;
-    
-    let html = '';
-    data.specs.forEach(s => {
-        html += `<div class="spec-spec-row"><span>${s.label}</span><span>${s.value}</span></div>`;
+// Dedicated Product Detail Page (PDP) Navigation
+function openProductDetail(id) {
+    thalmanStore.state.activePDPId = id;
+    const prod = thalmanStore.state.database[id];
+    const selection = thalmanStore.state.selections[id];
+    const symbol = thalmanStore.state.symbols[thalmanStore.state.currency];
+    const rate = thalmanStore.state.rates[thalmanStore.state.currency];
+
+    document.getElementById('pdpMainImg').src = selection.image;
+    document.getElementById('pdpTitle').innerText = prod.name;
+    document.getElementById('pdpPrice').innerText = `${symbol}${Math.round(prod.basePrice * rate)}`;
+    document.getElementById('pdpDescription').innerText = prod.description;
+
+    // Color buttons
+    let colorHtml = '';
+    prod.variants.forEach(v => {
+        const activeClass = v.color === selection.variant ? 'active' : '';
+        colorHtml += `<button class="opt-btn ${activeClass}" data-color="${v.color}" data-img="${v.img}" onclick="pdpSelectVariant('${id}', this)">${v.color}</button>`;
     });
-    
-    document.getElementById('specContent').innerHTML = html;
-    document.getElementById('specModal').classList.add('open');
-    document.getElementById('specModalOverlay').classList.add('open');
+    document.getElementById('pdpColorOptions').innerHTML = colorHtml;
+
+    // Size buttons
+    let sizeHtml = '';
+    ['XS', 'S', 'M', 'L'].forEach(sz => {
+        const activeClass = sz === selection.size ? 'active' : '';
+        sizeHtml += `<button class="opt-btn ${activeClass}" data-size="${sz}" onclick="pdpSelectSize('${id}', this)">${sz}</button>`;
+    });
+    document.getElementById('pdpSizeOptions').innerHTML = sizeHtml;
+
+    // Tech spec rows
+    let specHtml = '';
+    prod.specs.forEach(s => {
+        specHtml += `<div class="spec-spec-row"><span>${s.label}</span><span>${s.value}</span></div>`;
+    });
+    document.getElementById('pdpSpecRows').innerHTML = specHtml;
+
+    // PDP Add button binding
+    document.getElementById('pdpAddBtn').onclick = () => addToBag(id, prod.name);
+
+    document.getElementById('catalogView').style.display = 'none';
+    document.getElementById('productDetailView').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function closeSpecModal() {
-    document.getElementById('specModal').classList.remove('open');
-    document.getElementById('specModalOverlay').classList.remove('open');
+function showCatalogView() {
+    document.getElementById('productDetailView').style.display = 'none';
+    document.getElementById('catalogView').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function pdpSelectVariant(id, btn) {
+    const { color, img } = btn.dataset;
+    thalmanStore.state.selections[id].variant = color;
+    thalmanStore.state.selections[id].image = img;
+    document.getElementById('pdpMainImg').src = img;
+
+    const parent = btn.parentElement;
+    parent.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Sync card image on catalog
+    document.getElementById(`img-${id}`).src = img;
+}
+
+function pdpSelectSize(id, btn) {
+    const { size } = btn.dataset;
+    thalmanStore.state.selections[id].size = size;
+
+    const parent = btn.parentElement;
+    parent.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+}
+
+// Size Chart Modal Logic
+function openSizeChartModal() {
+    const id = thalmanStore.state.activePDPId || '1';
+    const prod = thalmanStore.state.database[id];
+    document.getElementById('sizeChartTitle').innerText = `${prod.name} — Size Guide`;
+
+    const table = document.getElementById('sizeTable');
+    if (id === '1') {
+        table.innerHTML = `
+            <tr><th>Size</th><th>Waist</th><th>Inseam</th><th>Leg Opening</th></tr>
+            <tr><td>XS</td><td>72 cm</td><td>81 cm</td><td>28 cm</td></tr>
+            <tr><td>S</td><td>76 cm</td><td>82 cm</td><td>29 cm</td></tr>
+            <tr><td>M</td><td>82 cm</td><td>83 cm</td><td>30 cm</td></tr>
+            <tr><td>L</td><td>88 cm</td><td>84 cm</td><td>31 cm</td></tr>
+        `;
+    } else {
+        table.innerHTML = `
+            <tr><th>Size</th><th>Chest</th><th>Length</th><th>Sleeve</th></tr>
+            <tr><td>XS</td><td>112 cm</td><td>64 cm</td><td>60 cm</td></tr>
+            <tr><td>S</td><td>118 cm</td><td>66 cm</td><td>62 cm</td></tr>
+            <tr><td>M</td><td>124 cm</td><td>68 cm</td><td>64 cm</td></tr>
+            <tr><td>L</td><td>130 cm</td><td>70 cm</td><td>66 cm</td></tr>
+        `;
+    }
+
+    document.getElementById('sizeChartModal').classList.add('open');
+    document.getElementById('sizeChartOverlay').classList.add('open');
+}
+
+function closeSizeChartModal() {
+    document.getElementById('sizeChartModal').classList.remove('open');
+    document.getElementById('sizeChartOverlay').classList.remove('open');
 }
 
 // Fit Calculator Modal Logic
@@ -93,7 +215,6 @@ function calculateFit() {
         return;
     }
 
-    // Basic sizing logic algorithm based on proportions & preference
     let score = (weight / (height / 100)) * 1.2;
     if(style === 'oversized') score -= 2;
     if(style === 'cropped') score += 2;
@@ -104,70 +225,110 @@ function calculateFit() {
     else if (score >= 22 && score < 26) recommended = 'M';
     else recommended = 'L';
 
-    const resultBox = document.getElementById('fitResultBox');
     const output = document.getElementById('recommendedSizeOutput');
     output.innerText = recommended + (style === 'oversized' ? ' (Generous Drop Shoulder)' : '');
-    resultBox.style.display = 'block';
+    document.getElementById('fitResultBox').style.display = 'block';
 }
 
-// Theme Toggle
-function toggleTheme() {
-    const html = document.documentElement;
-    const btn = document.getElementById('themeToggleBtn');
-    if (html.getAttribute('data-theme') === 'dark') {
-        html.setAttribute('data-theme', 'light');
-        btn.innerText = 'Dark Mode';
+// Checkout & Payment Validation Gateway
+function openCheckoutGateway() {
+    if (thalmanStore.state.cart.length === 0) {
+        alert('Your bag is empty.');
+        return;
+    }
+    toggleBag(); // Close drawer
+    updateShippingCost();
+    document.getElementById('checkoutModal').classList.add('open');
+    document.getElementById('checkoutOverlay').classList.add('open');
+}
+
+function closeCheckoutGateway() {
+    document.getElementById('checkoutModal').classList.remove('open');
+    document.getElementById('checkoutOverlay').classList.remove('open');
+}
+
+function updateShippingCost() {
+    const country = document.getElementById('custCountry').value;
+    const baseShipEUR = thalmanStore.state.shippingRates[country] || 10;
+    
+    const symbol = thalmanStore.state.symbols[thalmanStore.state.currency];
+    const rate = thalmanStore.state.rates[thalmanStore.state.currency];
+
+    let itemsBaseSubtotal = 0;
+    thalmanStore.state.cart.forEach(i => itemsBaseSubtotal += i.basePrice);
+
+    const convertedSubtotal = Math.round(itemsBaseSubtotal * rate);
+    const convertedShipping = Math.round(baseShipEUR * rate);
+    const total = convertedSubtotal + convertedShipping;
+
+    document.getElementById('summarySubtotal').innerText = `${symbol}${convertedSubtotal}`;
+    document.getElementById('summaryShipping').innerText = `${symbol}${convertedShipping}`;
+    document.getElementById('summaryTotal').innerText = `${symbol}${total}`;
+}
+
+function formatCardNumber(input) {
+    let v = input.value.replace(/\s+/g, '').replace(/[^0-9]/g, '');
+    let matches = v.match(/\d{4,16}/g);
+    let match = matches && matches[0] || '';
+    let parts = [];
+    for (let i = 0, len = match.length; i < len; i += 4) {
+        parts.push(match.substring(i, i + 4));
+    }
+    if (parts.length) {
+        input.value = parts.join(' ');
     } else {
-        html.setAttribute('data-theme', 'dark');
-        btn.innerText = 'Light Mode';
+        input.value = v;
     }
 }
 
-// Live User Counter
-function initLiveCounter() {
-    let count = Math.floor(Math.random() * 8) + 12;
-    const counterEl = document.getElementById('userCount');
-    if(counterEl) {
-        counterEl.innerText = count;
-        setInterval(() => {
-            const fluctuation = Math.floor(Math.random() * 3) - 1;
-            count = Math.max(8, count + fluctuation);
-            counterEl.innerText = count;
-        }, 5000);
+function formatExpiry(input) {
+    let v = input.value.replace(/\s+/g, '').replace(/[^0-9]/g, '');
+    if (v.length >= 2) {
+        input.value = v.substring(0, 2) + '/' + v.substring(2, 4);
+    } else {
+        input.value = v;
     }
 }
 
-// Newsletter Handler
-function handleNewsletter(event) {
-    event.preventDefault();
-    const emailInput = document.getElementById('subscriberEmail');
-    const successMsg = document.getElementById('newsletterSuccess');
-    if(emailInput.value) {
-        successMsg.style.display = 'block';
-        emailInput.value = '';
-        setTimeout(() => { successMsg.style.display = 'none'; }, 5000);
+function processPayment(e) {
+    e.preventDefault();
+    const cardNum = document.getElementById('cardNumber').value.replace(/\s/g, '');
+    if (cardNum.length < 15) {
+        alert('Please enter a valid 16-digit credit card number.');
+        return;
     }
+
+    document.getElementById('checkoutForm').style.display = 'none';
+    document.getElementById('paymentSuccess').style.display = 'block';
+
+    // Clear cart after payment
+    thalmanStore.state.cart = [];
+    updateBagCount();
+    renderCart();
 }
 
-function switchVariant(id, btnElement) {
+// Variant & Size selection logic for catalog cards
+function switchVariant(id, btnElement, e) {
+    if (e) e.stopPropagation();
     const { color, img, title } = btnElement.dataset;
     thalmanStore.state.selections[id].variant = color;
     thalmanStore.state.selections[id].image = img;
-    thalmanStore.state.selections[id].title = `${title} (${color})`;
 
     document.getElementById(`img-${id}`).src = img;
-    document.getElementById(`title-${id}`).innerText = thalmanStore.state.selections[id].title;
+    document.getElementById(`title-${id}`).innerText = `${title} (${color})`;
 
-    const parentOptions = btnElement.parentElement;
-    parentOptions.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
+    const parent = btnElement.parentElement;
+    parent.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
     btnElement.classList.add('active');
 }
 
-function selectSize(id, btnElement) {
+function selectSize(id, btnElement, e) {
+    if (e) e.stopPropagation();
     const { size } = btnElement.dataset;
     thalmanStore.state.selections[id].size = size;
-    const parentOptions = btnElement.parentElement;
-    parentOptions.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
+
+    const parent = btnElement.parentElement;
+    parent.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
     btnElement.classList.add('active');
 }
 
@@ -237,11 +398,48 @@ function updateCurrency() {
         el.innerText = `${symbol}${converted}`;
     });
 
+    if(thalmanStore.state.activePDPId) {
+        const prod = thalmanStore.state.database[thalmanStore.state.activePDPId];
+        document.getElementById('pdpPrice').innerText = `${symbol}${Math.round(prod.basePrice * rate)}`;
+    }
+
     renderCart();
 }
 
-function checkoutSimulation() {
-    alert('Accessing THALMAN encrypted gateway... Simulation initialized.');
+function toggleTheme() {
+    const html = document.documentElement;
+    const btn = document.getElementById('themeToggleBtn');
+    if (html.getAttribute('data-theme') === 'dark') {
+        html.setAttribute('data-theme', 'light');
+        btn.innerText = 'Dark Mode';
+    } else {
+        html.setAttribute('data-theme', 'dark');
+        btn.innerText = 'Light Mode';
+    }
+}
+
+function initLiveCounter() {
+    let count = Math.floor(Math.random() * 8) + 12;
+    const counterEl = document.getElementById('userCount');
+    if(counterEl) {
+        counterEl.innerText = count;
+        setInterval(() => {
+            const fluctuation = Math.floor(Math.random() * 3) - 1;
+            count = Math.max(8, count + fluctuation);
+            counterEl.innerText = count;
+        }, 5000);
+    }
+}
+
+function handleNewsletter(event) {
+    event.preventDefault();
+    const emailInput = document.getElementById('subscriberEmail');
+    const successMsg = document.getElementById('newsletterSuccess');
+    if(emailInput.value) {
+        successMsg.style.display = 'block';
+        emailInput.value = '';
+        setTimeout(() => { successMsg.style.display = 'none'; }, 5000);
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
