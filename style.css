@@ -1,4 +1,3 @@
-/* Theme Color Variables */
 [data-theme="dark"] {
     --bg-color: #050505;
     --surface-color: #0e0e0e;
@@ -150,6 +149,7 @@ header {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    cursor: pointer;
     transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
@@ -165,7 +165,6 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
     min-height: 380px;
     position: relative;
     overflow: hidden;
@@ -295,7 +294,6 @@ header {
     letter-spacing: 0.1em;
     text-transform: uppercase;
     cursor: pointer;
-    transition: border-color 0.2s;
 }
 
 .specs-trigger-btn:hover {
@@ -320,7 +318,6 @@ header {
     opacity: 0.8;
 }
 
-/* Dedicated Product Page (PDP) */
 .pdp-container { padding-top: 20px; }
 .back-link { background: none; border: none; color: var(--text-muted); font-family: 'Space Grotesk', sans-serif; font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; margin-bottom: 30px; }
 .back-link:hover { color: var(--text-main); }
@@ -337,7 +334,6 @@ header {
 .pdp-tech-specs { border-top: 1px solid var(--border-color); padding-top: 25px; margin-top: 25px; }
 .pdp-tech-specs h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 15px; }
 
-/* Modals & Checkout Gateway */
 .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(4px); z-index: 250; opacity: 0; visibility: hidden; transition: all 0.3s; }
 .modal-overlay.open { opacity: 1; visibility: visible; }
 
@@ -365,7 +361,6 @@ header {
 .fit-form-group input, .fit-form-group select { width: 100%; background: var(--input-bg); border: 1px solid var(--border-color); padding: 10px; color: var(--text-main); font-family: 'Space Grotesk', sans-serif; font-size: 0.8rem; outline: none; }
 .fit-result-box { margin-top: 20px; padding: 15px; background: var(--surface-color); border: 1px solid var(--border-color); text-align: center; font-size: 0.85rem; }
 
-/* Newsletter Box */
 .newsletter-section { margin-top: 80px; background: var(--card-bg); border: 1px solid var(--border-color); padding: 60px 30px; text-align: center; }
 .newsletter-content h3 { font-size: 1.2rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
 .newsletter-content p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 25px; }
@@ -374,7 +369,6 @@ header {
 .newsletter-form button { background: var(--accent); color: var(--bg-color); border: none; padding: 0 20px; font-family: 'Space Grotesk', sans-serif; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 700; cursor: pointer; }
 .newsletter-success { display: none; margin-top: 15px; font-size: 0.75rem; color: #4caf50; letter-spacing: 0.05em; text-transform: uppercase; }
 
-/* Bag Drawer & Lightbox */
 .drawer-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 200; opacity: 0; visibility: hidden; transition: all 0.3s; }
 .drawer-overlay.open { opacity: 1; visibility: visible; }
 
