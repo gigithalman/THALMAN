@@ -103,6 +103,23 @@ class ThalmanApp {
         return price;
     }
 
+    switchCardVariant(id, color, img, btn) {
+        event.stopPropagation();
+        this.selections[id].variant = color;
+        this.selections[id].img = img;
+        document.getElementById(`card-img-${id}`).src = img;
+
+        btn.parentElement.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+
+    selectCardSize(id, size, btn) {
+        event.stopPropagation();
+        this.selections[id].size = size;
+        btn.parentElement.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+
     openProduct(id) {
         this.activeId = id;
         const prod = this.database[id];
@@ -141,6 +158,13 @@ class ThalmanApp {
             colorGroup.style.display = 'none';
         }
 
+        // Set size active state in PDP
+        const sizeButtons = document.querySelectorAll('#pdpSizeOptions .opt-btn');
+        sizeButtons.forEach(b => {
+            if (b.innerText === sel.size) b.classList.add('active');
+            else b.classList.remove('active');
+        });
+
         // Specs
         let specHtml = '';
         prod.specs.forEach(s => {
@@ -170,6 +194,7 @@ class ThalmanApp {
         this.selections[id].variant = color;
         this.selections[id].img = img;
         document.getElementById('pdpImg').src = img;
+        document.getElementById(`card-img-${id}`).src = img;
         btn.parentElement.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
     }
@@ -212,6 +237,7 @@ class ThalmanApp {
     }
 
     quickAdd(id) {
+        event.stopPropagation();
         const prod = this.database[id];
         const sel = this.selections[id];
         const price = this.getDynamicPrice(id);
