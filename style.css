@@ -203,54 +203,6 @@ header {
     transform: scale(1.04);
 }
 
-/* JERSEY LIVE TEXT OVERLAY STYLING */
-.jersey-preview-wrapper {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.jersey-overlay-text {
-    position: absolute;
-    right: 25.5%; /* Positioned accurately over back side of jersey */
-    top: 26%;
-    width: 25%;
-    text-align: center;
-    pointer-events: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-}
-
-.jersey-name-render {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 700;
-    font-size: 0.75rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    line-height: 1;
-    margin-bottom: 8px;
-    white-space: nowrap;
-}
-
-.jersey-num-render {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 700;
-    font-size: 3.2rem;
-    line-height: 0.9;
-    letter-spacing: -0.05em;
-}
-
-/* Country Edition Specific Color Schemes for Overlays */
-.text-germany { color: #d8d8d8; text-shadow: 0 0 2px rgba(0,0,0,0.8); }
-.text-spain { color: #2e3d2f; }
-.text-england { color: #e1dfd7; }
-.text-ukraine { color: #d1b848; }
-
 .jersey-customizer-box {
     background: var(--surface-color);
     border: 1px solid var(--border-color);
@@ -375,7 +327,7 @@ header {
 .pdp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
 @media (max-width: 900px) { .pdp-grid { grid-template-columns: 1fr; } }
 
-.pdp-main-img-box { background: var(--surface-color); border: 1px solid var(--border-color); padding: 40px; display: flex; items-center: center; justify-content: center; cursor: zoom-in; }
+.pdp-main-img-box { background: var(--surface-color); border: 1px solid var(--border-color); padding: 40px; display: flex; align-items: center; justify-content: center; cursor: zoom-in; }
 .pdp-main-img-box img { width: 100%; max-height: 500px; object-fit: contain; }
 .pdp-tag { font-size: 0.65rem; letter-spacing: 0.2em; color: var(--text-muted); }
 .pdp-title { font-size: 1.5rem; font-weight: 600; margin: 5px 0 10px; }
