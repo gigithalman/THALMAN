@@ -23,7 +23,7 @@
             </select>
             <button class="theme-toggle" onclick="toggleTheme()" id="themeToggleBtn">Light Mode</button>
         </div>
-        <div class="logo-container">
+        <div class="logo-container" onclick="showCatalogView()" style="cursor: pointer;">
             <img src="images/logo.png" alt="THALMAN Logo">
         </div>
         <div class="header-right">
@@ -33,112 +33,159 @@
     </header>
 
     <main class="container">
-        <div class="products-grid">
+        
+        <!-- CATALOG VIEW -->
+        <div id="catalogView" class="fade-in">
+            <div class="products-grid">
 
-            <!-- PRODUCT 001 -->
-            <div class="product-card" data-product-id="1">
-                <div class="product-image-container" onclick="openLightbox(this.querySelector('img').src)">
-                    <img id="img-1" src="images/denim-charcoal.png" alt="THALMAN Product 001 Structured Denim">
+                <!-- PRODUCT 001 -->
+                <div class="product-card" data-product-id="1">
+                    <div class="product-image-container" onclick="openProductDetail('1')">
+                        <img id="img-1" src="images/denim-charcoal.png" alt="THALMAN Product 001 Structured Denim">
+                        <span class="hover-inspect-badge">Click to Inspect</span>
+                    </div>
+                    <div class="product-details">
+                        <div class="product-header-row" onclick="openProductDetail('1')" style="cursor: pointer;">
+                            <div>
+                                <div class="product-title" id="title-1">Product 001 | Structured Denim</div>
+                                <div class="product-subtitle">Heavyweight Panel Construction</div>
+                            </div>
+                            <div class="product-price" data-base-price="290">€290</div>
+                        </div>
+
+                        <div class="selector-group">
+                            <div class="selector-label">Color</div>
+                            <div class="options-flex">
+                                <button class="opt-btn active" data-color="Charcoal Black" data-img="images/denim-charcoal.png" data-title="Product 001 | Structured Denim" onclick="switchVariant('1', this, event)">Charcoal Black</button>
+                                <button class="opt-btn" data-color="Medium Wash Blue" data-img="images/denim-blue.png" data-title="Product 001 | Structured Denim" onclick="switchVariant('1', this, event)">Medium Wash Blue</button>
+                            </div>
+                        </div>
+
+                        <div class="selector-group">
+                            <div class="selector-label">Size</div>
+                            <div class="options-flex" id="sizes-1">
+                                <button class="opt-btn" data-size="XS" onclick="selectSize('1', this, event)">XS</button>
+                                <button class="opt-btn active" data-size="S" onclick="selectSize('1', this, event)">S</button>
+                                <button class="opt-btn" data-size="M" onclick="selectSize('1', this, event)">M</button>
+                                <button class="opt-btn" data-size="L" onclick="selectSize('1', this, event)">L</button>
+                            </div>
+                        </div>
+
+                        <div class="card-action-row">
+                            <button class="specs-trigger-btn" onclick="openProductDetail('1')">View Details</button>
+                            <button class="add-btn" onclick="addToBag('1', 'Product 001')">Add To Bag</button>
+                        </div>
+                    </div>
                 </div>
-                <div class="product-details">
-                    <div class="product-header-row">
-                        <div>
-                            <div class="product-title" id="title-1">Product 001 | Structured Denim</div>
-                            <div class="product-subtitle">Heavyweight Panel Construction</div>
-                        </div>
-                        <div class="product-price" data-base-price="290">€290</div>
-                    </div>
 
-                    <div class="selector-group">
-                        <div class="selector-label">Color</div>
-                        <div class="options-flex">
-                            <button class="opt-btn active" data-color="Charcoal Black" data-img="images/denim-charcoal.png" data-title="Product 001 | Structured Denim" onclick="switchVariant('1', this)">Charcoal Black</button>
-                            <button class="opt-btn" data-color="Medium Wash Blue" data-img="images/denim-blue.png" data-title="Product 001 | Structured Denim" onclick="switchVariant('1', this)">Medium Wash Blue</button>
-                        </div>
+                <!-- PRODUCT 002 -->
+                <div class="product-card" data-product-id="2">
+                    <div class="product-image-container" onclick="openProductDetail('2')">
+                        <img id="img-2" src="images/hoodie-black.png" alt="THALMAN Product 002 Heavyweight Hoodie">
+                        <span class="hover-inspect-badge">Click to Inspect</span>
                     </div>
-
-                    <div class="selector-group">
-                        <div class="selector-label">Size</div>
-                        <div class="options-flex" id="sizes-1">
-                            <button class="opt-btn" data-size="XS" onclick="selectSize('1', this)">XS</button>
-                            <button class="opt-btn active" data-size="S" onclick="selectSize('1', this)">S</button>
-                            <button class="opt-btn" data-size="M" onclick="selectSize('1', this)">M</button>
-                            <button class="opt-btn" data-size="L" onclick="selectSize('1', this)">L</button>
+                    <div class="product-details">
+                        <div class="product-header-row" onclick="openProductDetail('2')" style="cursor: pointer;">
+                            <div>
+                                <div class="product-title" id="title-2">Product 002 | Heavyweight Hoodie</div>
+                                <div class="product-subtitle">Custom Star Emblem Embroidery</div>
+                            </div>
+                            <div class="product-price" data-base-price="220">€220</div>
                         </div>
-                    </div>
 
-                    <div class="card-action-row">
-                        <button class="specs-trigger-btn" onclick="openSpecModal('1')">Inspect Specs</button>
-                        <button class="add-btn" onclick="addToBag('1', 'Product 001')">Add To Bag</button>
+                        <div class="selector-group">
+                            <div class="selector-label">Color</div>
+                            <div class="options-flex">
+                                <button class="opt-btn active" data-color="Black" data-img="images/hoodie-black.png" data-title="Product 002 | Heavyweight Hoodie" onclick="switchVariant('2', this, event)">Black</button>
+                                <button class="opt-btn" data-color="White" data-img="images/hoodie-white.png" data-title="Product 002 | Heavyweight Hoodie" onclick="switchVariant('2', this, event)">White</button>
+                            </div>
+                        </div>
+
+                        <div class="selector-group">
+                            <div class="selector-label">Size</div>
+                            <div class="options-flex" id="sizes-2">
+                                <button class="opt-btn" data-size="XS" onclick="selectSize('2', this, event)">XS</button>
+                                <button class="opt-btn active" data-size="S" onclick="selectSize('2', this, event)">S</button>
+                                <button class="opt-btn" data-size="M" onclick="selectSize('2', this, event)">M</button>
+                                <button class="opt-btn" data-size="L" onclick="selectSize('2', this, event)">L</button>
+                            </div>
+                        </div>
+
+                        <div class="card-action-row">
+                            <button class="specs-trigger-btn" onclick="openProductDetail('2')">View Details</button>
+                            <button class="add-btn" onclick="addToBag('2', 'Product 002')">Add To Bag</button>
+                        </div>
                     </div>
                 </div>
+
             </div>
 
-            <!-- PRODUCT 002 -->
-            <div class="product-card" data-product-id="2">
-                <div class="product-image-container" onclick="openLightbox(this.querySelector('img').src)">
-                    <img id="img-2" src="images/hoodie-black.png" alt="THALMAN Product 002 Heavyweight Hoodie">
+            <!-- NEWSLETTER SECTION -->
+            <section class="newsletter-section">
+                <div class="newsletter-content">
+                    <h3>Join the Private Release List</h3>
+                    <p>Get early access to upcoming drops, secret showroom links, and archives.</p>
+                    <form class="newsletter-form" onsubmit="handleNewsletter(event)">
+                        <input type="email" id="subscriberEmail" placeholder="Enter your email address" required>
+                        <button type="submit">Subscribe</button>
+                    </form>
+                    <div id="newsletterSuccess" class="newsletter-success">You are on the list. Welcome to THALMAN.</div>
                 </div>
-                <div class="product-details">
-                    <div class="product-header-row">
-                        <div>
-                            <div class="product-title" id="title-2">Product 002 | Heavyweight Hoodie</div>
-                            <div class="product-subtitle">Custom Star Emblem Embroidery</div>
-                        </div>
-                        <div class="product-price" data-base-price="220">€220</div>
-                    </div>
-
-                    <div class="selector-group">
-                        <div class="selector-label">Color</div>
-                        <div class="options-flex">
-                            <button class="opt-btn active" data-color="Black" data-img="images/hoodie-black.png" data-title="Product 002 | Heavyweight Hoodie" onclick="switchVariant('2', this)">Black</button>
-                            <button class="opt-btn" data-color="White" data-img="images/hoodie-white.png" data-title="Product 002 | Heavyweight Hoodie" onclick="switchVariant('2', this)">White</button>
-                        </div>
-                    </div>
-
-                    <div class="selector-group">
-                        <div class="selector-label">Size</div>
-                        <div class="options-flex" id="sizes-2">
-                            <button class="opt-btn" data-size="XS" onclick="selectSize('2', this)">XS</button>
-                            <button class="opt-btn active" data-size="S" onclick="selectSize('2', this)">S</button>
-                            <button class="opt-btn" data-size="M" onclick="selectSize('2', this)">M</button>
-                            <button class="opt-btn" data-size="L" onclick="selectSize('2', this)">L</button>
-                        </div>
-                    </div>
-
-                    <div class="card-action-row">
-                        <button class="specs-trigger-btn" onclick="openSpecModal('2')">Inspect Specs</button>
-                        <button class="add-btn" onclick="addToBag('2', 'Product 002')">Add To Bag</button>
-                    </div>
-                </div>
-            </div>
-
+            </section>
         </div>
 
-        <!-- NEWSLETTER SECTION -->
-        <section class="newsletter-section">
-            <div class="newsletter-content">
-                <h3>Join the Private Release List</h3>
-                <p>Get early access to upcoming drops, secret showroom links, and archives.</p>
-                <form class="newsletter-form" onsubmit="handleNewsletter(event)">
-                    <input type="email" id="subscriberEmail" placeholder="Enter your email address" required>
-                    <button type="submit">Subscribe</button>
-                </form>
-                <div id="newsletterSuccess" class="newsletter-success">You are on the list. Welcome to THALMAN.</div>
+        <!-- DEDICATED PRODUCT DETAIL VIEW (PDP) -->
+        <div id="productDetailView" class="pdp-container fade-in" style="display: none;">
+            <button class="back-link" onclick="showCatalogView()">&larr; Back to Collection</button>
+            <div class="pdp-grid">
+                <div class="pdp-gallery">
+                    <div class="pdp-main-img-box" onclick="openLightbox(document.getElementById('pdpMainImg').src)">
+                        <img id="pdpMainImg" src="" alt="Main Product Photo">
+                    </div>
+                </div>
+                <div class="pdp-info-panel">
+                    <span class="pdp-tag">STUDIO ARCHIVE</span>
+                    <h1 id="pdpTitle" class="pdp-title"></h1>
+                    <div id="pdpPrice" class="pdp-price"></div>
+                    <p id="pdpDescription" class="pdp-description"></p>
+
+                    <div class="selector-group" style="margin-top: 25px;">
+                        <div class="selector-label">Color</div>
+                        <div class="options-flex" id="pdpColorOptions"></div>
+                    </div>
+
+                    <div class="selector-group">
+                        <div class="selector-label">Size</div>
+                        <div class="options-flex" id="pdpSizeOptions"></div>
+                    </div>
+
+                    <div class="pdp-action-row">
+                        <button class="add-btn" id="pdpAddBtn">Add To Bag</button>
+                        <button class="specs-trigger-btn" onclick="openSizeChartModal()">Size Chart</button>
+                    </div>
+
+                    <div class="pdp-tech-specs">
+                        <h3>Technical Specifications</h3>
+                        <div id="pdpSpecRows"></div>
+                    </div>
+                </div>
             </div>
-        </section>
+        </div>
+
     </main>
 
-    <!-- SPEC MODAL -->
-    <div class="modal-overlay" id="specModalOverlay" onclick="closeSpecModal()"></div>
-    <div class="technical-modal" id="specModal">
-        <button class="modal-close" onclick="closeSpecModal()">&times;</button>
+    <!-- SIZE CHART MODAL -->
+    <div class="modal-overlay" id="sizeChartOverlay" onclick="closeSizeChartModal()"></div>
+    <div class="technical-modal" id="sizeChartModal">
+        <button class="modal-close" onclick="closeSizeChartModal()">&times;</button>
         <div class="modal-header">
-            <span class="modal-tag">DESIGN STUDIO ARCHIVE</span>
-            <h2 id="specTitle">Technical Specifications</h2>
+            <span class="modal-tag">GARMENT MEASUREMENTS (CM)</span>
+            <h2 id="sizeChartTitle">Size Guide</h2>
         </div>
-        <div class="modal-body" id="specContent">
-            <!-- Dynamically populated -->
+        <div class="modal-body">
+            <table class="size-table" id="sizeTable">
+                <!-- Dynamically injected -->
+            </table>
         </div>
     </div>
 
@@ -167,14 +214,14 @@
                     <option value="cropped">Cropped / Tailored Fit</option>
                 </select>
             </div>
-            <button class="add-btn" onclick="calculateFit()" style="margin-top: 10px;">Calculate Recommended Size</button>
+            <button class="add-btn" onclick="calculateFit()" style="margin-top: 10px; width: 100%;">Calculate Recommended Size</button>
             <div id="fitResultBox" class="fit-result-box" style="display: none;">
                 Recommended Size: <span id="recommendedSizeOutput" style="font-weight: 700; color: var(--accent);"></span>
             </div>
         </div>
     </div>
 
-    <!-- Bag Drawer -->
+    <!-- SHOPPING BAG DRAWER -->
     <div class="drawer-overlay" id="drawerOverlay" onclick="toggleBag()"></div>
     <div class="bag-drawer" id="bagDrawer">
         <div class="drawer-header">
@@ -189,11 +236,90 @@
                 <span>Subtotal</span>
                 <span id="bagSubtotal">€0</span>
             </div>
-            <button class="checkout-btn" onclick="checkoutSimulation()">Proceed to Checkout</button>
+            <button class="checkout-btn" onclick="openCheckoutGateway()">Proceed to Checkout</button>
         </div>
     </div>
 
-    <!-- Lightbox -->
+    <!-- CHECKOUT GATEWAY MODAL -->
+    <div class="modal-overlay" id="checkoutOverlay" onclick="closeCheckoutGateway()"></div>
+    <div class="checkout-modal" id="checkoutModal">
+        <button class="modal-close" onclick="closeCheckoutGateway()">&times;</button>
+        <div class="modal-header">
+            <span class="modal-tag">ENCRYPTED CHECKOUT</span>
+            <h2>Delivery & Payment</h2>
+        </div>
+        <form id="checkoutForm" onsubmit="processPayment(event)">
+            <div class="checkout-step-title">1. Shipping Address</div>
+            <div class="fit-form-group">
+                <label>Full Name</label>
+                <input type="text" id="custName" required placeholder="Gianna Thalman">
+            </div>
+            <div class="fit-form-group">
+                <label>Street Address</label>
+                <input type="text" id="custAddress" required placeholder="e.g. Maximilianstraße 12">
+            </div>
+            <div class="checkout-row-2">
+                <div class="fit-form-group">
+                    <label>City</label>
+                    <input type="text" id="custCity" required placeholder="e.g. Munich">
+                </div>
+                <div class="fit-form-group">
+                    <label>Postal Code</label>
+                    <input type="text" id="custZip" required placeholder="80331">
+                </div>
+            </div>
+            <div class="fit-form-group">
+                <label>Country Destination</label>
+                <select id="custCountry" onchange="updateShippingCost()" required>
+                    <option value="DE">Germany (€5.00)</option>
+                    <option value="ES">Spain (€8.00)</option>
+                    <option value="FR">France (€9.00)</option>
+                    <option value="NL">Netherlands (€8.00)</option>
+                    <option value="GB">England / UK (€10.00)</option>
+                    <option value="UA">Ukraine (€12.00)</option>
+                    <option value="US">United States (€18.00)</option>
+                    <option value="CA">Canada (€20.00)</option>
+                    <option value="AR">Argentina (€28.00)</option>
+                    <option value="BR">Brazil (€25.00)</option>
+                </select>
+            </div>
+
+            <div class="checkout-step-title" style="margin-top: 25px;">2. Payment Method</div>
+            <div class="fit-form-group">
+                <label>Cardholder Name</label>
+                <input type="text" id="cardName" required placeholder="Gianna Thalman">
+            </div>
+            <div class="fit-form-group">
+                <label>Card Number</label>
+                <input type="text" id="cardNumber" required maxlength="19" placeholder="4532 •••• •••• 8892" oninput="formatCardNumber(this)">
+            </div>
+            <div class="checkout-row-2">
+                <div class="fit-form-group">
+                    <label>Expiry (MM/YY)</label>
+                    <input type="text" id="cardExpiry" required maxlength="5" placeholder="08/28" oninput="formatExpiry(this)">
+                </div>
+                <div class="fit-form-group">
+                    <label>CVC / CVV</label>
+                    <input type="password" id="cardCvc" required maxlength="4" placeholder="123">
+                </div>
+            </div>
+
+            <div class="checkout-summary-box">
+                <div class="summary-line"><span>Items Subtotal:</span><span id="summarySubtotal">€0</span></div>
+                <div class="summary-line"><span>Estimated Shipping:</span><span id="summaryShipping">€5</span></div>
+                <div class="summary-line total"><span>Total Amount:</span><span id="summaryTotal">€0</span></div>
+            </div>
+
+            <button type="submit" class="add-btn" style="width: 100%; margin-top: 20px;">Confirm & Pay Order</button>
+        </form>
+        <div id="paymentSuccess" class="payment-success-box" style="display: none;">
+            <div class="success-icon">✓</div>
+            <h3>Order Confirmed</h3>
+            <p>Your THALMAN order has been authorized. A confirmation receipt and tracking code have been queued.</p>
+        </div>
+    </div>
+
+    <!-- LIGHTBOX -->
     <div class="lightbox" id="lightbox" onclick="closeLightbox()">
         <button class="lightbox-close">&times;</button>
         <img id="lightboxImg" src="" alt="Zoom">
