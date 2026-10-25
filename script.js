@@ -195,6 +195,16 @@ class ThalmanApp {
         this.selections[id].img = img;
         document.getElementById('pdpImg').src = img;
         document.getElementById(`card-img-${id}`).src = img;
+
+        // Sync card color button active state
+        const cardColorContainer = document.getElementById(`card-colors-${id}`);
+        if (cardColorContainer) {
+            cardColorContainer.querySelectorAll('.opt-btn').forEach(b => {
+                if (b.innerText.trim() === color) b.classList.add('active');
+                else b.classList.remove('active');
+            });
+        }
+
         btn.parentElement.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
     }
