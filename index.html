@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>THALMAN — Official Store</title>
-    <!-- THALMAN LINK: Professional Typography -->
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- THALMAN LINK: Internal Stylesheet (CSS) -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="announcement-bar">Handcrafted Luxury Streetwear — Worldwide Shipping from Munich</div>
+    <div class="announcement-bar">
+        <span>Handcrafted Luxury Streetwear — Worldwide Shipping from Munich</span>
+        <span class="live-counter">● <span id="userCount">14</span> online now</span>
+    </div>
 
     <header>
         <div class="header-left">
@@ -20,6 +21,7 @@
                 <option value="USD">USD ($)</option>
                 <option value="GBP">GBP (£)</option>
             </select>
+            <button class="theme-toggle" onclick="toggleTheme()" id="themeToggleBtn">Light Mode</button>
         </div>
         <div class="logo-container">
             <img src="images/logo.png" alt="THALMAN Logo">
@@ -30,7 +32,7 @@
     <main class="container">
         <div class="products-grid">
 
-            <!-- PRODUCT 001: Structured Denim -->
+            <!-- PRODUCT 001 -->
             <div class="product-card" data-product-id="1">
                 <div class="product-image-container" onclick="openLightbox(this.querySelector('img').src)">
                     <img id="img-1" src="images/denim-charcoal.png" alt="THALMAN Product 001 Structured Denim">
@@ -66,7 +68,7 @@
                 </div>
             </div>
 
-            <!-- PRODUCT 002: Heavyweight Hoodie -->
+            <!-- PRODUCT 002 -->
             <div class="product-card" data-product-id="2">
                 <div class="product-image-container" onclick="openLightbox(this.querySelector('img').src)">
                     <img id="img-2" src="images/hoodie-black.png" alt="THALMAN Product 002 Heavyweight Hoodie">
@@ -103,9 +105,22 @@
             </div>
 
         </div>
+
+        <!-- NEWSLETTER SECTION -->
+        <section class="newsletter-section">
+            <div class="newsletter-content">
+                <h3>Join the Private Release List</h3>
+                <p>Get early access to upcoming drops, secret showroom links, and archives.</p>
+                <form class="newsletter-form" onsubmit="handleNewsletter(event)">
+                    <input type="email" id="subscriberEmail" placeholder="Enter your email address" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+                <div id="newsletterSuccess" class="newsletter-success">You are on the list. Welcome to THALMAN.</div>
+            </div>
+        </section>
     </main>
 
-    <!-- THALMAN MODAL: Inquiry Bag Drawer -->
+    <!-- Bag Drawer -->
     <div class="drawer-overlay" id="drawerOverlay" onclick="toggleBag()"></div>
     <div class="bag-drawer" id="bagDrawer">
         <div class="drawer-header">
@@ -113,7 +128,7 @@
             <button class="close-drawer" onclick="toggleBag()">&times;</button>
         </div>
         <div class="drawer-items" id="drawerItems">
-            <p style="color: #888; font-size: 0.8rem; text-align: center; margin-top: 40px;">Your bag is currently empty.</p>
+            <p style="color: var(--text-muted); font-size: 0.8rem; text-align: center; margin-top: 40px;">Your bag is currently empty.</p>
         </div>
         <div class="drawer-footer">
             <div class="subtotal-row">
@@ -124,17 +139,16 @@
         </div>
     </div>
 
-    <!-- THALMAN MODAL: Lightbox for Dynamic Zoom -->
+    <!-- Lightbox -->
     <div class="lightbox" id="lightbox" onclick="closeLightbox()">
         <button class="lightbox-close">&times;</button>
-        <img id="lightboxImg" src="" alt="THALMAN Zoom View">
+        <img id="lightboxImg" src="" alt="Zoom">
     </div>
 
     <footer>
         &copy; 2026 THALMAN. All Rights Reserved.
     </footer>
 
-    <!-- THALMAN LINK: Dynamic Logic (JavaScript) -->
     <script src="script.js"></script>
 </body>
 </html>
