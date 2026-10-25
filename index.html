@@ -39,43 +39,81 @@
             <div class="products-grid">
 
                 <!-- PRODUCT 001 -->
-                <div class="product-card" onclick="thalmanApp.openProduct('1')">
-                    <div class="product-image-container">
-                        <img src="images/denim-charcoal.png" alt="Product 001 Structured Denim">
+                <div class="product-card">
+                    <div class="product-image-container" onclick="thalmanApp.openProduct('1')">
+                        <img id="card-img-1" src="images/denim-charcoal.png" alt="Product 001 Structured Denim">
                         <span class="hover-inspect-badge">Click to Inspect</span>
                     </div>
                     <div class="product-details">
-                        <div class="product-header-row">
+                        <div class="product-header-row" onclick="thalmanApp.openProduct('1')" style="cursor: pointer;">
                             <div>
                                 <div class="product-title">Product 001 | Structured Denim</div>
                                 <div class="product-subtitle">Heavyweight Panel Construction</div>
                             </div>
                             <div class="product-price" data-base="290">€290</div>
                         </div>
+
+                        <div class="selector-group">
+                            <div class="selector-label">Color</div>
+                            <div class="options-flex">
+                                <button class="opt-btn active" onclick="thalmanApp.switchCardVariant('1', 'Charcoal Black', 'images/denim-charcoal.png', this)">Charcoal Black</button>
+                                <button class="opt-btn" onclick="thalmanApp.switchCardVariant('1', 'Medium Wash Blue', 'images/denim-blue.png', this)">Medium Wash Blue</button>
+                            </div>
+                        </div>
+
+                        <div class="selector-group">
+                            <div class="selector-label">Size</div>
+                            <div class="options-flex">
+                                <button class="opt-btn" onclick="thalmanApp.selectCardSize('1', 'XS', this)">XS</button>
+                                <button class="opt-btn active" onclick="thalmanApp.selectCardSize('1', 'S', this)">S</button>
+                                <button class="opt-btn" onclick="thalmanApp.selectCardSize('1', 'M', this)">M</button>
+                                <button class="opt-btn" onclick="thalmanApp.selectCardSize('1', 'L', this)">L</button>
+                            </div>
+                        </div>
+
                         <div class="card-action-row">
-                            <button class="specs-trigger-btn">View Details</button>
-                            <button class="add-btn" onclick="event.stopPropagation(); thalmanApp.quickAdd('1')">Add To Bag</button>
+                            <button class="specs-trigger-btn" onclick="thalmanApp.openProduct('1')">View Details</button>
+                            <button class="add-btn" onclick="thalmanApp.quickAdd('1')">Add To Bag</button>
                         </div>
                     </div>
                 </div>
 
                 <!-- PRODUCT 002 -->
-                <div class="product-card" onclick="thalmanApp.openProduct('2')">
-                    <div class="product-image-container">
-                        <img src="images/hoodie-black.png" alt="Product 002 Heavyweight Hoodie">
+                <div class="product-card">
+                    <div class="product-image-container" onclick="thalmanApp.openProduct('2')">
+                        <img id="card-img-2" src="images/hoodie-black.png" alt="Product 002 Heavyweight Hoodie">
                         <span class="hover-inspect-badge">Click to Inspect</span>
                     </div>
                     <div class="product-details">
-                        <div class="product-header-row">
+                        <div class="product-header-row" onclick="thalmanApp.openProduct('2')" style="cursor: pointer;">
                             <div>
                                 <div class="product-title">Product 002 | Heavyweight Hoodie</div>
                                 <div class="product-subtitle">Custom Star Emblem Embroidery</div>
                             </div>
                             <div class="product-price" data-base="220">€220</div>
                         </div>
+
+                        <div class="selector-group">
+                            <div class="selector-label">Color</div>
+                            <div class="options-flex">
+                                <button class="opt-btn active" onclick="thalmanApp.switchCardVariant('2', 'Black', 'images/hoodie-black.png', this)">Black</button>
+                                <button class="opt-btn" onclick="thalmanApp.switchCardVariant('2', 'White', 'images/hoodie-white.png', this)">White</button>
+                            </div>
+                        </div>
+
+                        <div class="selector-group">
+                            <div class="selector-label">Size</div>
+                            <div class="options-flex">
+                                <button class="opt-btn" onclick="thalmanApp.selectCardSize('2', 'XS', this)">XS</button>
+                                <button class="opt-btn active" onclick="thalmanApp.selectCardSize('2', 'S', this)">S</button>
+                                <button class="opt-btn" onclick="thalmanApp.selectCardSize('2', 'M', this)">M</button>
+                                <button class="opt-btn" onclick="thalmanApp.selectCardSize('2', 'L', this)">L</button>
+                            </div>
+                        </div>
+
                         <div class="card-action-row">
-                            <button class="specs-trigger-btn">View Details</button>
-                            <button class="add-btn" onclick="event.stopPropagation(); thalmanApp.quickAdd('2')">Add To Bag</button>
+                            <button class="specs-trigger-btn" onclick="thalmanApp.openProduct('2')">View Details</button>
+                            <button class="add-btn" onclick="thalmanApp.quickAdd('2')">Add To Bag</button>
                         </div>
                     </div>
                 </div>
