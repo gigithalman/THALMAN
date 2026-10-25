@@ -118,6 +118,54 @@
                     </div>
                 </div>
 
+                <!-- PRODUCT 003: CUSTOM FOOTBALL SHIRTS -->
+                <div class="product-card" data-product-id="3">
+                    <div class="product-image-container jersey-container" onclick="openProductDetail('3')">
+                        <div class="jersey-preview-wrapper" id="cardJerseyWrapper-3">
+                            <img id="img-3" src="images/germany.png" alt="THALMAN Product 003 Football Jersey">
+                            <div class="jersey-overlay-text text-germany" id="cardJerseyText-3">
+                                <span class="jersey-name-render" id="cardJerseyName-3">YOUR NAME</span>
+                                <span class="jersey-num-render" id="cardJerseyNum-3">10</span>
+                            </div>
+                        </div>
+                        <span class="hover-inspect-badge">Customize Jersey</span>
+                    </div>
+                    <div class="product-details">
+                        <div class="product-header-row" onclick="openProductDetail('3')" style="cursor: pointer;">
+                            <div>
+                                <div class="product-title" id="title-3">Product 003 | National Football Kit</div>
+                                <div class="product-subtitle">Jacquard Performance Jersey</div>
+                            </div>
+                            <div class="product-price" data-base-price="180">€180</div>
+                        </div>
+
+                        <div class="selector-group">
+                            <div class="selector-label">Edition</div>
+                            <div class="options-flex">
+                                <button class="opt-btn active" data-color="Germany" data-img="images/germany.png" data-title="Product 003 | National Football Kit" onclick="switchJerseyEdition('3', 'Germany', 'images/germany.png', this, event)">Germany</button>
+                                <button class="opt-btn" data-color="Spain" data-img="images/spain.png" data-title="Product 003 | National Football Kit" onclick="switchJerseyEdition('3', 'Spain', 'images/spain.png', this, event)">Spain</button>
+                                <button class="opt-btn" data-color="England" data-img="images/england.png" data-title="Product 003 | National Football Kit" onclick="switchJerseyEdition('3', 'England', 'images/england.png', this, event)">England</button>
+                                <button class="opt-btn" data-color="Ukraine" data-img="images/ukraine.png" data-title="Product 003 | National Football Kit" onclick="switchJerseyEdition('3', 'Ukraine', 'images/ukraine.png', this, event)">Ukraine</button>
+                            </div>
+                        </div>
+
+                        <div class="selector-group">
+                            <div class="selector-label">Size</div>
+                            <div class="options-flex" id="sizes-3">
+                                <button class="opt-btn" data-size="XS" onclick="selectSize('3', this, event)">XS</button>
+                                <button class="opt-btn active" data-size="S" onclick="selectSize('3', this, event)">S</button>
+                                <button class="opt-btn" data-size="M" onclick="selectSize('3', this, event)">M</button>
+                                <button class="opt-btn" data-size="L" onclick="selectSize('3', this, event)">L</button>
+                            </div>
+                        </div>
+
+                        <div class="card-action-row">
+                            <button class="specs-trigger-btn" onclick="openProductDetail('3')">Customize</button>
+                            <button class="add-btn" onclick="addToBag('3', 'Product 003')">Add To Bag</button>
+                        </div>
+                    </div>
+                </div>
+
             </div>
 
             <!-- NEWSLETTER SECTION -->
@@ -139,8 +187,14 @@
             <button class="back-link" onclick="showCatalogView()">&larr; Back to Collection</button>
             <div class="pdp-grid">
                 <div class="pdp-gallery">
-                    <div class="pdp-main-img-box" onclick="openLightbox(document.getElementById('pdpMainImg').src)">
-                        <img id="pdpMainImg" src="" alt="Main Product Photo">
+                    <div class="pdp-main-img-box jersey-container" onclick="openLightbox(document.getElementById('pdpMainImg').src)">
+                        <div class="jersey-preview-wrapper" id="pdpJerseyWrapper">
+                            <img id="pdpMainImg" src="" alt="Main Product Photo">
+                            <div class="jersey-overlay-text" id="pdpJerseyText" style="display: none;">
+                                <span class="jersey-name-render" id="pdpJerseyNameRender">YOUR NAME</span>
+                                <span class="jersey-num-render" id="pdpJerseyNumRender">10</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="pdp-info-panel">
@@ -149,8 +203,23 @@
                     <div id="pdpPrice" class="pdp-price"></div>
                     <p id="pdpDescription" class="pdp-description"></p>
 
+                    <!-- CUSTOMIZATION INPUTS (Shown on Football Shirts) -->
+                    <div id="jerseyCustomizerBox" class="jersey-customizer-box" style="display: none;">
+                        <span class="modal-tag">LIVE PRINT CUSTOMIZATION</span>
+                        <div class="checkout-row-2">
+                            <div class="fit-form-group">
+                                <label>Name on Back</label>
+                                <input type="text" id="jerseyNameInput" maxlength="12" placeholder="YOUR NAME" oninput="updateJerseyLiveText()">
+                            </div>
+                            <div class="fit-form-group">
+                                <label>Number (0-99)</label>
+                                <input type="text" id="jerseyNumInput" maxlength="2" placeholder="10" oninput="updateJerseyLiveText()">
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="selector-group" style="margin-top: 25px;">
-                        <div class="selector-label">Color</div>
+                        <div class="selector-label">Edition</div>
                         <div class="options-flex" id="pdpColorOptions"></div>
                     </div>
 
@@ -183,9 +252,7 @@
             <h2 id="sizeChartTitle">Size Guide</h2>
         </div>
         <div class="modal-body">
-            <table class="size-table" id="sizeTable">
-                <!-- Dynamically injected -->
-            </table>
+            <table class="size-table" id="sizeTable"></table>
         </div>
     </div>
 
