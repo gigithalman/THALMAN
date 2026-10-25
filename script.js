@@ -121,13 +121,11 @@ function getDynamicPrice(id) {
     let price = prod.basePrice;
     if(['3', '4', '5', '6'].includes(id)) {
         const nameLen = (thalmanStore.state.selections[id].customName || '').trim().length;
-        // 10p per character added to base price
         price += nameLen * 0.10;
     }
     return price;
 }
 
-// Dedicated Product Detail View
 function openProductDetail(id) {
     thalmanStore.state.activePDPId = id;
     const prod = thalmanStore.state.database[id];
@@ -136,9 +134,7 @@ function openProductDetail(id) {
     const rate = thalmanStore.state.rates[thalmanStore.state.currency];
 
     let imgSrc = selection.image;
-    if(id === '1') imgSrc = selection.image;
-    else if(id === '2') imgSrc = selection.image;
-    else if(id === '3') imgSrc = 'images/germany.png';
+    if(id === '3') imgSrc = 'images/germany.png';
     else if(id === '4') imgSrc = 'images/spain.png';
     else if(id === '5') imgSrc = 'images/england.png';
     else if(id === '6') imgSrc = 'images/ukraine.png';
@@ -150,7 +146,6 @@ function openProductDetail(id) {
     document.getElementById('pdpPrice').innerText = `${symbol}${(currentPrice * rate).toFixed(2)}`;
     document.getElementById('pdpDescription').innerText = prod.description;
 
-    // Customizer Box for Jerseys (3, 4, 5, 6)
     const customizerBox = document.getElementById('jerseyCustomizerBox');
     if(['3', '4', '5', '6'].includes(id)) {
         customizerBox.style.display = 'block';
@@ -160,7 +155,6 @@ function openProductDetail(id) {
         customizerBox.style.display = 'none';
     }
 
-    // Color/Variant selector if applicable
     const colorGroup = document.getElementById('colorSelectorGroup');
     if(prod.variants) {
         colorGroup.style.display = 'flex';
@@ -174,7 +168,6 @@ function openProductDetail(id) {
         colorGroup.style.display = 'none';
     }
 
-    // Size options
     let sizeHtml = '';
     ['XS', 'S', 'M', 'L'].forEach(sz => {
         const activeClass = sz === selection.size ? 'active' : '';
@@ -182,7 +175,6 @@ function openProductDetail(id) {
     });
     document.getElementById('pdpSizeOptions').innerHTML = sizeHtml;
 
-    // Spec rows
     let specHtml = '';
     prod.specs.forEach(s => {
         specHtml += `<div class="spec-spec-row"><span>${s.label}</span><span>${s.value}</span></div>`;
@@ -210,7 +202,6 @@ function updateJerseyCustomization() {
     thalmanStore.state.selections[id].customName = nameVal;
     thalmanStore.state.selections[id].customNum = numVal;
 
-    // Update PDP price live including 10p per character
     const symbol = thalmanStore.state.symbols[thalmanStore.state.currency];
     const rate = thalmanStore.state.rates[thalmanStore.state.currency];
     const currentPrice = getDynamicPrice(id);
@@ -247,7 +238,6 @@ function selectSize(id, btnElement, e) {
     btnElement.classList.add('active');
 }
 
-// Modal & Fit Calculator Handlers
 function openSizeChartModal() {
     const id = thalmanStore.state.activePDPId || '1';
     const prod = thalmanStore.state.database[id];
